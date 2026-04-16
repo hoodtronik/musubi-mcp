@@ -1,0 +1,1632 @@
+============================================================
+### cache_latents.py
+============================================================
+W0416 14:42:40.944000 12896 .venv\Lib\site-packages\torch\utils\flop_counter.py:29] triton not found; flop counting will not work for triton kernels
+usage: cache_latents.py [-h] --dataset_config DATASET_CONFIG [--vae VAE]
+                        [--vae_dtype VAE_DTYPE] [--device DEVICE]
+                        [--batch_size BATCH_SIZE] [--num_workers NUM_WORKERS]
+                        [--skip_existing] [--keep_cache]
+                        [--debug_mode {image,console,video}]
+                        [--console_width CONSOLE_WIDTH]
+                        [--console_back CONSOLE_BACK]
+                        [--console_num_images CONSOLE_NUM_IMAGES]
+                        [--disable_cudnn_backend] [--vae_tiling]
+                        [--vae_chunk_size VAE_CHUNK_SIZE]
+                        [--vae_spatial_tile_sample_min_size VAE_SPATIAL_TILE_SAMPLE_MIN_SIZE]
+
+options:
+  -h, --help            show this help message and exit
+  --dataset_config DATASET_CONFIG
+                        path to dataset config .toml file
+  --vae VAE             path to vae checkpoint
+  --vae_dtype VAE_DTYPE
+                        data type for VAE, default depends on model, e.g.,
+                        float16
+  --device DEVICE       device to use, default is cuda if available
+  --batch_size BATCH_SIZE
+                        batch size, override dataset config if dataset batch
+                        size > this
+  --num_workers NUM_WORKERS
+                        number of workers for dataset. default is cpu count-1
+  --skip_existing       skip existing cache files
+  --keep_cache          keep cache files not in dataset
+  --debug_mode {image,console,video}
+                        debug mode
+  --console_width CONSOLE_WIDTH
+                        debug mode: console width
+  --console_back CONSOLE_BACK
+                        debug mode: console background color, one of
+                        ascii_magic.Back
+  --console_num_images CONSOLE_NUM_IMAGES
+                        debug mode: not interactive, number of images to show
+                        for each dataset
+  --disable_cudnn_backend
+                        Disable CUDNN PyTorch backend. May be useful for AMD
+                        GPUs.
+  --vae_tiling          enable spatial tiling for VAE, default is False. If
+                        vae_spatial_tile_sample_min_size is set, this is
+                        automatically enabled
+  --vae_chunk_size VAE_CHUNK_SIZE
+                        chunk size for CausalConv3d in VAE
+  --vae_spatial_tile_sample_min_size VAE_SPATIAL_TILE_SAMPLE_MIN_SIZE
+                        spatial tile sample min size for VAE, default 256
+
+============================================================
+### cache_text_encoder_outputs.py
+============================================================
+usage: cache_text_encoder_outputs.py [-h] --dataset_config DATASET_CONFIG
+                                     [--device DEVICE]
+                                     [--batch_size BATCH_SIZE]
+                                     [--num_workers NUM_WORKERS]
+                                     [--skip_existing] [--keep_cache]
+                                     --text_encoder1 TEXT_ENCODER1
+                                     --text_encoder2 TEXT_ENCODER2
+                                     [--text_encoder_dtype TEXT_ENCODER_DTYPE]
+                                     [--fp8_llm]
+
+options:
+  -h, --help            show this help message and exit
+  --dataset_config DATASET_CONFIG
+                        path to dataset config .toml file
+  --device DEVICE       device to use, default is cuda if available
+  --batch_size BATCH_SIZE
+                        batch size, override dataset config if dataset batch
+                        size > this
+  --num_workers NUM_WORKERS
+                        number of workers for dataset. default is cpu count-1
+  --skip_existing       skip existing cache files
+  --keep_cache          keep cache files not in dataset
+  --text_encoder1 TEXT_ENCODER1
+                        Text Encoder 1 directory
+  --text_encoder2 TEXT_ENCODER2
+                        Text Encoder 2 directory
+  --text_encoder_dtype TEXT_ENCODER_DTYPE
+                        data type for Text Encoder, default is float16
+  --fp8_llm             use fp8 for Text Encoder 1 (LLM)
+
+============================================================
+### wan_cache_latents.py
+============================================================
+W0416 14:42:54.063000 47204 .venv\Lib\site-packages\torch\utils\flop_counter.py:29] triton not found; flop counting will not work for triton kernels
+usage: wan_cache_latents.py [-h] --dataset_config DATASET_CONFIG [--vae VAE]
+                            [--vae_dtype VAE_DTYPE] [--device DEVICE]
+                            [--batch_size BATCH_SIZE]
+                            [--num_workers NUM_WORKERS] [--skip_existing]
+                            [--keep_cache]
+                            [--debug_mode {image,console,video}]
+                            [--console_width CONSOLE_WIDTH]
+                            [--console_back CONSOLE_BACK]
+                            [--console_num_images CONSOLE_NUM_IMAGES]
+                            [--disable_cudnn_backend] [--vae_cache_cpu]
+                            [--i2v] [--clip CLIP] [--one_frame]
+
+options:
+  -h, --help            show this help message and exit
+  --dataset_config DATASET_CONFIG
+                        path to dataset config .toml file
+  --vae VAE             path to vae checkpoint
+  --vae_dtype VAE_DTYPE
+                        data type for VAE, default depends on model, e.g.,
+                        float16
+  --device DEVICE       device to use, default is cuda if available
+  --batch_size BATCH_SIZE
+                        batch size, override dataset config if dataset batch
+                        size > this
+  --num_workers NUM_WORKERS
+                        number of workers for dataset. default is cpu count-1
+  --skip_existing       skip existing cache files
+  --keep_cache          keep cache files not in dataset
+  --debug_mode {image,console,video}
+                        debug mode
+  --console_width CONSOLE_WIDTH
+                        debug mode: console width
+  --console_back CONSOLE_BACK
+                        debug mode: console background color, one of
+                        ascii_magic.Back
+  --console_num_images CONSOLE_NUM_IMAGES
+                        debug mode: not interactive, number of images to show
+                        for each dataset
+  --disable_cudnn_backend
+                        Disable CUDNN PyTorch backend. May be useful for AMD
+                        GPUs.
+  --vae_cache_cpu       cache features in VAE on CPU
+  --i2v                 I2V model, encode the first frame as control image. If
+                        clip is set, this is automatically set to True
+  --clip CLIP           text encoder (CLIP) checkpoint path, optional. If
+                        training Wan2.1 I2V model, this is required
+  --one_frame           Generate cache for one frame training (single frame,
+                        single section).
+
+============================================================
+### wan_cache_text_encoder_outputs.py
+============================================================
+usage: wan_cache_text_encoder_outputs.py [-h] --dataset_config DATASET_CONFIG
+                                         [--device DEVICE]
+                                         [--batch_size BATCH_SIZE]
+                                         [--num_workers NUM_WORKERS]
+                                         [--skip_existing] [--keep_cache] --t5
+                                         T5 [--fp8_t5]
+
+options:
+  -h, --help            show this help message and exit
+  --dataset_config DATASET_CONFIG
+                        path to dataset config .toml file
+  --device DEVICE       device to use, default is cuda if available
+  --batch_size BATCH_SIZE
+                        batch size, override dataset config if dataset batch
+                        size > this
+  --num_workers NUM_WORKERS
+                        number of workers for dataset. default is cpu count-1
+  --skip_existing       skip existing cache files
+  --keep_cache          keep cache files not in dataset
+  --t5 T5               text encoder (T5) checkpoint path
+  --fp8_t5              use fp8 for Text Encoder model
+
+============================================================
+### wan_train_network.py
+============================================================
+Trying to import sageattention
+Failed to import sageattention
+Traceback (most recent call last):
+  File "F:\__PROJECTS\musubi-tuner\wan_train_network.py", line 4, in <module>
+    main()
+  File "F:\__PROJECTS\musubi-tuner\src\musubi_tuner\wan_train_network.py", line 752, in main
+    args = parser.parse_args()
+  File "F:\stability_matrix\Data\Assets\Python\cpython-3.10.17-windows-x86_64-none\lib\argparse.py", line 1833, in parse_args
+    args, argv = self.parse_known_args(args, namespace)
+  File "F:\stability_matrix\Data\Assets\Python\cpython-3.10.17-windows-x86_64-none\lib\argparse.py", line 1866, in parse_known_args
+    namespace, args = self._parse_known_args(args, namespace)
+  File "F:\stability_matrix\Data\Assets\Python\cpython-3.10.17-windows-x86_64-none\lib\argparse.py", line 2079, in _parse_known_args
+    start_index = consume_optional(start_index)
+  File "F:\stability_matrix\Data\Assets\Python\cpython-3.10.17-windows-x86_64-none\lib\argparse.py", line 2019, in consume_optional
+    take_action(action, args, option_string)
+  File "F:\stability_matrix\Data\Assets\Python\cpython-3.10.17-windows-x86_64-none\lib\argparse.py", line 1943, in take_action
+    action(self, namespace, argument_values, option_string)
+  File "F:\stability_matrix\Data\Assets\Python\cpython-3.10.17-windows-x86_64-none\lib\argparse.py", line 1106, in __call__
+    parser.print_help()
+  File "F:\stability_matrix\Data\Assets\Python\cpython-3.10.17-windows-x86_64-none\lib\argparse.py", line 2567, in print_help
+    self._print_message(self.format_help(), file)
+  File "F:\stability_matrix\Data\Assets\Python\cpython-3.10.17-windows-x86_64-none\lib\argparse.py", line 2573, in _print_message
+    file.write(message)
+  File "F:\stability_matrix\Data\Assets\Python\cpython-3.10.17-windows-x86_64-none\lib\encodings\cp1252.py", line 19, in encode
+    return codecs.charmap_encode(input,self.errors,encoding_table)[0]
+UnicodeEncodeError: 'charmap' codec can't encode characters in position 7780-7795: character maps to <undefined>
+[exit 1]
+
+============================================================
+### wan_generate_video.py
+============================================================
+Trying to import sageattention
+Failed to import sageattention
+Traceback (most recent call last):
+  File "F:\__PROJECTS\musubi-tuner\wan_generate_video.py", line 4, in <module>
+    main()
+  File "F:\__PROJECTS\musubi-tuner\src\musubi_tuner\wan_generate_video.py", line 2215, in main
+    args = parse_args()
+  File "F:\__PROJECTS\musubi-tuner\src\musubi_tuner\wan_generate_video.py", line 249, in parse_args
+    args = parser.parse_args()
+  File "F:\stability_matrix\Data\Assets\Python\cpython-3.10.17-windows-x86_64-none\lib\argparse.py", line 1833, in parse_args
+    args, argv = self.parse_known_args(args, namespace)
+  File "F:\stability_matrix\Data\Assets\Python\cpython-3.10.17-windows-x86_64-none\lib\argparse.py", line 1866, in parse_known_args
+    namespace, args = self._parse_known_args(args, namespace)
+  File "F:\stability_matrix\Data\Assets\Python\cpython-3.10.17-windows-x86_64-none\lib\argparse.py", line 2079, in _parse_known_args
+    start_index = consume_optional(start_index)
+  File "F:\stability_matrix\Data\Assets\Python\cpython-3.10.17-windows-x86_64-none\lib\argparse.py", line 2019, in consume_optional
+    take_action(action, args, option_string)
+  File "F:\stability_matrix\Data\Assets\Python\cpython-3.10.17-windows-x86_64-none\lib\argparse.py", line 1943, in take_action
+    action(self, namespace, argument_values, option_string)
+  File "F:\stability_matrix\Data\Assets\Python\cpython-3.10.17-windows-x86_64-none\lib\argparse.py", line 1106, in __call__
+    parser.print_help()
+  File "F:\stability_matrix\Data\Assets\Python\cpython-3.10.17-windows-x86_64-none\lib\argparse.py", line 2567, in print_help
+    self._print_message(self.format_help(), file)
+  File "F:\stability_matrix\Data\Assets\Python\cpython-3.10.17-windows-x86_64-none\lib\argparse.py", line 2573, in _print_message
+    file.write(message)
+  File "F:\stability_matrix\Data\Assets\Python\cpython-3.10.17-windows-x86_64-none\lib\encodings\cp1252.py", line 19, in encode
+    return codecs.charmap_encode(input,self.errors,encoding_table)[0]
+UnicodeEncodeError: 'charmap' codec can't encode characters in position 11176-11182: character maps to <undefined>
+[exit 1]
+
+============================================================
+### flux_2_cache_latents.py
+============================================================
+W0416 14:43:13.498000 54772 .venv\Lib\site-packages\torch\utils\flop_counter.py:29] triton not found; flop counting will not work for triton kernels
+usage: flux_2_cache_latents.py [-h] --dataset_config DATASET_CONFIG
+                               [--vae VAE] [--vae_dtype VAE_DTYPE]
+                               [--device DEVICE] [--batch_size BATCH_SIZE]
+                               [--num_workers NUM_WORKERS] [--skip_existing]
+                               [--keep_cache]
+                               [--debug_mode {image,console,video}]
+                               [--console_width CONSOLE_WIDTH]
+                               [--console_back CONSOLE_BACK]
+                               [--console_num_images CONSOLE_NUM_IMAGES]
+                               [--disable_cudnn_backend]
+                               [--model_version {klein-4b,klein-base-4b,klein-9b,klein-base-9b,dev}]
+
+options:
+  -h, --help            show this help message and exit
+  --dataset_config DATASET_CONFIG
+                        path to dataset config .toml file
+  --vae VAE             path to vae checkpoint
+  --vae_dtype VAE_DTYPE
+                        data type for VAE, default depends on model, e.g.,
+                        float16
+  --device DEVICE       device to use, default is cuda if available
+  --batch_size BATCH_SIZE
+                        batch size, override dataset config if dataset batch
+                        size > this
+  --num_workers NUM_WORKERS
+                        number of workers for dataset. default is cpu count-1
+  --skip_existing       skip existing cache files
+  --keep_cache          keep cache files not in dataset
+  --debug_mode {image,console,video}
+                        debug mode
+  --console_width CONSOLE_WIDTH
+                        debug mode: console width
+  --console_back CONSOLE_BACK
+                        debug mode: console background color, one of
+                        ascii_magic.Back
+  --console_num_images CONSOLE_NUM_IMAGES
+                        debug mode: not interactive, number of images to show
+                        for each dataset
+  --disable_cudnn_backend
+                        Disable CUDNN PyTorch backend. May be useful for AMD
+                        GPUs.
+  --model_version {klein-4b,klein-base-4b,klein-9b,klein-base-9b,dev}
+                        model version
+
+============================================================
+### flux_2_cache_text_encoder_outputs.py
+============================================================
+usage: flux_2_cache_text_encoder_outputs.py [-h] --dataset_config
+                                            DATASET_CONFIG [--device DEVICE]
+                                            [--batch_size BATCH_SIZE]
+                                            [--num_workers NUM_WORKERS]
+                                            [--skip_existing] [--keep_cache]
+                                            --text_encoder TEXT_ENCODER
+                                            [--fp8_text_encoder]
+                                            [--model_version {klein-4b,klein-base-4b,klein-9b,klein-base-9b,dev}]
+
+options:
+  -h, --help            show this help message and exit
+  --dataset_config DATASET_CONFIG
+                        path to dataset config .toml file
+  --device DEVICE       device to use, default is cuda if available
+  --batch_size BATCH_SIZE
+                        batch size, override dataset config if dataset batch
+                        size > this
+  --num_workers NUM_WORKERS
+                        number of workers for dataset. default is cpu count-1
+  --skip_existing       skip existing cache files
+  --keep_cache          keep cache files not in dataset
+  --text_encoder TEXT_ENCODER
+                        text encoder (mistral 3) checkpoint path
+  --fp8_text_encoder    use fp8 for Text Encoder model
+  --model_version {klein-4b,klein-base-4b,klein-9b,klein-base-9b,dev}
+                        model version
+
+============================================================
+### flux_2_train_network.py
+============================================================
+Trying to import sageattention
+Failed to import sageattention
+Traceback (most recent call last):
+  File "F:\__PROJECTS\musubi-tuner\flux_2_train_network.py", line 4, in <module>
+    main()
+  File "F:\__PROJECTS\musubi-tuner\src\musubi_tuner\flux_2_train_network.py", line 351, in main
+    args = parser.parse_args()
+  File "F:\stability_matrix\Data\Assets\Python\cpython-3.10.17-windows-x86_64-none\lib\argparse.py", line 1833, in parse_args
+    args, argv = self.parse_known_args(args, namespace)
+  File "F:\stability_matrix\Data\Assets\Python\cpython-3.10.17-windows-x86_64-none\lib\argparse.py", line 1866, in parse_known_args
+    namespace, args = self._parse_known_args(args, namespace)
+  File "F:\stability_matrix\Data\Assets\Python\cpython-3.10.17-windows-x86_64-none\lib\argparse.py", line 2079, in _parse_known_args
+    start_index = consume_optional(start_index)
+  File "F:\stability_matrix\Data\Assets\Python\cpython-3.10.17-windows-x86_64-none\lib\argparse.py", line 2019, in consume_optional
+    take_action(action, args, option_string)
+  File "F:\stability_matrix\Data\Assets\Python\cpython-3.10.17-windows-x86_64-none\lib\argparse.py", line 1943, in take_action
+    action(self, namespace, argument_values, option_string)
+  File "F:\stability_matrix\Data\Assets\Python\cpython-3.10.17-windows-x86_64-none\lib\argparse.py", line 1106, in __call__
+    parser.print_help()
+  File "F:\stability_matrix\Data\Assets\Python\cpython-3.10.17-windows-x86_64-none\lib\argparse.py", line 2567, in print_help
+    self._print_message(self.format_help(), file)
+  File "F:\stability_matrix\Data\Assets\Python\cpython-3.10.17-windows-x86_64-none\lib\argparse.py", line 2573, in _print_message
+    file.write(message)
+  File "F:\stability_matrix\Data\Assets\Python\cpython-3.10.17-windows-x86_64-none\lib\encodings\cp1252.py", line 19, in encode
+    return codecs.charmap_encode(input,self.errors,encoding_table)[0]
+UnicodeEncodeError: 'charmap' codec can't encode characters in position 7856-7871: character maps to <undefined>
+[exit 1]
+
+============================================================
+### flux_2_generate_image.py
+============================================================
+Trying to import sageattention
+Failed to import sageattention
+Traceback (most recent call last):
+  File "F:\__PROJECTS\musubi-tuner\flux_2_generate_image.py", line 4, in <module>
+    main()
+  File "F:\__PROJECTS\musubi-tuner\src\musubi_tuner\flux_2_generate_image.py", line 1120, in main
+    args = parse_args()
+  File "F:\__PROJECTS\musubi-tuner\src\musubi_tuner\flux_2_generate_image.py", line 158, in parse_args
+    args = parser.parse_args()
+  File "F:\stability_matrix\Data\Assets\Python\cpython-3.10.17-windows-x86_64-none\lib\argparse.py", line 1833, in parse_args
+    args, argv = self.parse_known_args(args, namespace)
+  File "F:\stability_matrix\Data\Assets\Python\cpython-3.10.17-windows-x86_64-none\lib\argparse.py", line 1866, in parse_known_args
+    namespace, args = self._parse_known_args(args, namespace)
+  File "F:\stability_matrix\Data\Assets\Python\cpython-3.10.17-windows-x86_64-none\lib\argparse.py", line 2079, in _parse_known_args
+    start_index = consume_optional(start_index)
+  File "F:\stability_matrix\Data\Assets\Python\cpython-3.10.17-windows-x86_64-none\lib\argparse.py", line 2019, in consume_optional
+    take_action(action, args, option_string)
+  File "F:\stability_matrix\Data\Assets\Python\cpython-3.10.17-windows-x86_64-none\lib\argparse.py", line 1943, in take_action
+    action(self, namespace, argument_values, option_string)
+  File "F:\stability_matrix\Data\Assets\Python\cpython-3.10.17-windows-x86_64-none\lib\argparse.py", line 1106, in __call__
+    parser.print_help()
+  File "F:\stability_matrix\Data\Assets\Python\cpython-3.10.17-windows-x86_64-none\lib\argparse.py", line 2567, in print_help
+    self._print_message(self.format_help(), file)
+  File "F:\stability_matrix\Data\Assets\Python\cpython-3.10.17-windows-x86_64-none\lib\argparse.py", line 2573, in _print_message
+    file.write(message)
+  File "F:\stability_matrix\Data\Assets\Python\cpython-3.10.17-windows-x86_64-none\lib\encodings\cp1252.py", line 19, in encode
+    return codecs.charmap_encode(input,self.errors,encoding_table)[0]
+UnicodeEncodeError: 'charmap' codec can't encode characters in position 5719-5725: character maps to <undefined>
+[exit 1]
+
+============================================================
+### zimage_cache_latents.py
+============================================================
+W0416 14:43:30.811000 48596 .venv\Lib\site-packages\torch\utils\flop_counter.py:29] triton not found; flop counting will not work for triton kernels
+usage: zimage_cache_latents.py [-h] --dataset_config DATASET_CONFIG
+                               [--vae VAE] [--vae_dtype VAE_DTYPE]
+                               [--device DEVICE] [--batch_size BATCH_SIZE]
+                               [--num_workers NUM_WORKERS] [--skip_existing]
+                               [--keep_cache]
+                               [--debug_mode {image,console,video}]
+                               [--console_width CONSOLE_WIDTH]
+                               [--console_back CONSOLE_BACK]
+                               [--console_num_images CONSOLE_NUM_IMAGES]
+                               [--disable_cudnn_backend]
+
+options:
+  -h, --help            show this help message and exit
+  --dataset_config DATASET_CONFIG
+                        path to dataset config .toml file
+  --vae VAE             path to vae checkpoint
+  --vae_dtype VAE_DTYPE
+                        data type for VAE, default depends on model, e.g.,
+                        float16
+  --device DEVICE       device to use, default is cuda if available
+  --batch_size BATCH_SIZE
+                        batch size, override dataset config if dataset batch
+                        size > this
+  --num_workers NUM_WORKERS
+                        number of workers for dataset. default is cpu count-1
+  --skip_existing       skip existing cache files
+  --keep_cache          keep cache files not in dataset
+  --debug_mode {image,console,video}
+                        debug mode
+  --console_width CONSOLE_WIDTH
+                        debug mode: console width
+  --console_back CONSOLE_BACK
+                        debug mode: console background color, one of
+                        ascii_magic.Back
+  --console_num_images CONSOLE_NUM_IMAGES
+                        debug mode: not interactive, number of images to show
+                        for each dataset
+  --disable_cudnn_backend
+                        Disable CUDNN PyTorch backend. May be useful for AMD
+                        GPUs.
+
+============================================================
+### zimage_cache_text_encoder_outputs.py
+============================================================
+usage: zimage_cache_text_encoder_outputs.py [-h] --dataset_config
+                                            DATASET_CONFIG [--device DEVICE]
+                                            [--batch_size BATCH_SIZE]
+                                            [--num_workers NUM_WORKERS]
+                                            [--skip_existing] [--keep_cache]
+                                            --text_encoder TEXT_ENCODER
+                                            [--fp8_llm]
+
+options:
+  -h, --help            show this help message and exit
+  --dataset_config DATASET_CONFIG
+                        path to dataset config .toml file
+  --device DEVICE       device to use, default is cuda if available
+  --batch_size BATCH_SIZE
+                        batch size, override dataset config if dataset batch
+                        size > this
+  --num_workers NUM_WORKERS
+                        number of workers for dataset. default is cpu count-1
+  --skip_existing       skip existing cache files
+  --keep_cache          keep cache files not in dataset
+  --text_encoder TEXT_ENCODER
+                        Qwen3 text encoder checkpoint path or directory
+  --fp8_llm             Use fp8 precision for Qwen3 text encoder (reduces
+                        memory usage)
+
+============================================================
+### zimage_train_network.py
+============================================================
+Trying to import sageattention
+Failed to import sageattention
+Traceback (most recent call last):
+  File "F:\__PROJECTS\musubi-tuner\zimage_train_network.py", line 4, in <module>
+    main()
+  File "F:\__PROJECTS\musubi-tuner\src\musubi_tuner\zimage_train_network.py", line 352, in main
+    args = parser.parse_args()
+  File "F:\stability_matrix\Data\Assets\Python\cpython-3.10.17-windows-x86_64-none\lib\argparse.py", line 1833, in parse_args
+    args, argv = self.parse_known_args(args, namespace)
+  File "F:\stability_matrix\Data\Assets\Python\cpython-3.10.17-windows-x86_64-none\lib\argparse.py", line 1866, in parse_known_args
+    namespace, args = self._parse_known_args(args, namespace)
+  File "F:\stability_matrix\Data\Assets\Python\cpython-3.10.17-windows-x86_64-none\lib\argparse.py", line 2079, in _parse_known_args
+    start_index = consume_optional(start_index)
+  File "F:\stability_matrix\Data\Assets\Python\cpython-3.10.17-windows-x86_64-none\lib\argparse.py", line 2019, in consume_optional
+    take_action(action, args, option_string)
+  File "F:\stability_matrix\Data\Assets\Python\cpython-3.10.17-windows-x86_64-none\lib\argparse.py", line 1943, in take_action
+    action(self, namespace, argument_values, option_string)
+  File "F:\stability_matrix\Data\Assets\Python\cpython-3.10.17-windows-x86_64-none\lib\argparse.py", line 1106, in __call__
+    parser.print_help()
+  File "F:\stability_matrix\Data\Assets\Python\cpython-3.10.17-windows-x86_64-none\lib\argparse.py", line 2567, in print_help
+    self._print_message(self.format_help(), file)
+  File "F:\stability_matrix\Data\Assets\Python\cpython-3.10.17-windows-x86_64-none\lib\argparse.py", line 2573, in _print_message
+    file.write(message)
+  File "F:\stability_matrix\Data\Assets\Python\cpython-3.10.17-windows-x86_64-none\lib\encodings\cp1252.py", line 19, in encode
+    return codecs.charmap_encode(input,self.errors,encoding_table)[0]
+UnicodeEncodeError: 'charmap' codec can't encode characters in position 7769-7784: character maps to <undefined>
+[exit 1]
+
+============================================================
+### zimage_train.py
+============================================================
+Trying to import sageattention
+Failed to import sageattention
+Traceback (most recent call last):
+  File "F:\__PROJECTS\musubi-tuner\zimage_train.py", line 4, in <module>
+    main()
+  File "F:\__PROJECTS\musubi-tuner\src\musubi_tuner\zimage_train.py", line 698, in main
+    args = parser.parse_args()
+  File "F:\stability_matrix\Data\Assets\Python\cpython-3.10.17-windows-x86_64-none\lib\argparse.py", line 1833, in parse_args
+    args, argv = self.parse_known_args(args, namespace)
+  File "F:\stability_matrix\Data\Assets\Python\cpython-3.10.17-windows-x86_64-none\lib\argparse.py", line 1866, in parse_known_args
+    namespace, args = self._parse_known_args(args, namespace)
+  File "F:\stability_matrix\Data\Assets\Python\cpython-3.10.17-windows-x86_64-none\lib\argparse.py", line 2079, in _parse_known_args
+    start_index = consume_optional(start_index)
+  File "F:\stability_matrix\Data\Assets\Python\cpython-3.10.17-windows-x86_64-none\lib\argparse.py", line 2019, in consume_optional
+    take_action(action, args, option_string)
+  File "F:\stability_matrix\Data\Assets\Python\cpython-3.10.17-windows-x86_64-none\lib\argparse.py", line 1943, in take_action
+    action(self, namespace, argument_values, option_string)
+  File "F:\stability_matrix\Data\Assets\Python\cpython-3.10.17-windows-x86_64-none\lib\argparse.py", line 1106, in __call__
+    parser.print_help()
+  File "F:\stability_matrix\Data\Assets\Python\cpython-3.10.17-windows-x86_64-none\lib\argparse.py", line 2567, in print_help
+    self._print_message(self.format_help(), file)
+  File "F:\stability_matrix\Data\Assets\Python\cpython-3.10.17-windows-x86_64-none\lib\argparse.py", line 2573, in _print_message
+    file.write(message)
+  File "F:\stability_matrix\Data\Assets\Python\cpython-3.10.17-windows-x86_64-none\lib\encodings\cp1252.py", line 19, in encode
+    return codecs.charmap_encode(input,self.errors,encoding_table)[0]
+UnicodeEncodeError: 'charmap' codec can't encode characters in position 6958-6973: character maps to <undefined>
+[exit 1]
+
+============================================================
+### zimage_generate_image.py
+============================================================
+Trying to import sageattention
+Failed to import sageattention
+Traceback (most recent call last):
+  File "F:\__PROJECTS\musubi-tuner\zimage_generate_image.py", line 4, in <module>
+    main()
+  File "F:\__PROJECTS\musubi-tuner\src\musubi_tuner\zimage_generate_image.py", line 1012, in main
+    args = parse_args()
+  File "F:\__PROJECTS\musubi-tuner\src\musubi_tuner\zimage_generate_image.py", line 140, in parse_args
+    args = parser.parse_args()
+  File "F:\stability_matrix\Data\Assets\Python\cpython-3.10.17-windows-x86_64-none\lib\argparse.py", line 1833, in parse_args
+    args, argv = self.parse_known_args(args, namespace)
+  File "F:\stability_matrix\Data\Assets\Python\cpython-3.10.17-windows-x86_64-none\lib\argparse.py", line 1866, in parse_known_args
+    namespace, args = self._parse_known_args(args, namespace)
+  File "F:\stability_matrix\Data\Assets\Python\cpython-3.10.17-windows-x86_64-none\lib\argparse.py", line 2079, in _parse_known_args
+    start_index = consume_optional(start_index)
+  File "F:\stability_matrix\Data\Assets\Python\cpython-3.10.17-windows-x86_64-none\lib\argparse.py", line 2019, in consume_optional
+    take_action(action, args, option_string)
+  File "F:\stability_matrix\Data\Assets\Python\cpython-3.10.17-windows-x86_64-none\lib\argparse.py", line 1943, in take_action
+    action(self, namespace, argument_values, option_string)
+  File "F:\stability_matrix\Data\Assets\Python\cpython-3.10.17-windows-x86_64-none\lib\argparse.py", line 1106, in __call__
+    parser.print_help()
+  File "F:\stability_matrix\Data\Assets\Python\cpython-3.10.17-windows-x86_64-none\lib\argparse.py", line 2567, in print_help
+    self._print_message(self.format_help(), file)
+  File "F:\stability_matrix\Data\Assets\Python\cpython-3.10.17-windows-x86_64-none\lib\argparse.py", line 2573, in _print_message
+    file.write(message)
+  File "F:\stability_matrix\Data\Assets\Python\cpython-3.10.17-windows-x86_64-none\lib\encodings\cp1252.py", line 19, in encode
+    return codecs.charmap_encode(input,self.errors,encoding_table)[0]
+UnicodeEncodeError: 'charmap' codec can't encode characters in position 5659-5665: character maps to <undefined>
+[exit 1]
+
+============================================================
+### hv_train_network.py
+============================================================
+Trying to import sageattention
+Failed to import sageattention
+Traceback (most recent call last):
+  File "F:\__PROJECTS\musubi-tuner\hv_train_network.py", line 4, in <module>
+    main()
+  File "F:\__PROJECTS\musubi-tuner\src\musubi_tuner\hv_train_network.py", line 3086, in main
+    args = parser.parse_args()
+  File "F:\stability_matrix\Data\Assets\Python\cpython-3.10.17-windows-x86_64-none\lib\argparse.py", line 1833, in parse_args
+    args, argv = self.parse_known_args(args, namespace)
+  File "F:\stability_matrix\Data\Assets\Python\cpython-3.10.17-windows-x86_64-none\lib\argparse.py", line 1866, in parse_known_args
+    namespace, args = self._parse_known_args(args, namespace)
+  File "F:\stability_matrix\Data\Assets\Python\cpython-3.10.17-windows-x86_64-none\lib\argparse.py", line 2079, in _parse_known_args
+    start_index = consume_optional(start_index)
+  File "F:\stability_matrix\Data\Assets\Python\cpython-3.10.17-windows-x86_64-none\lib\argparse.py", line 2019, in consume_optional
+    take_action(action, args, option_string)
+  File "F:\stability_matrix\Data\Assets\Python\cpython-3.10.17-windows-x86_64-none\lib\argparse.py", line 1943, in take_action
+    action(self, namespace, argument_values, option_string)
+  File "F:\stability_matrix\Data\Assets\Python\cpython-3.10.17-windows-x86_64-none\lib\argparse.py", line 1106, in __call__
+    parser.print_help()
+  File "F:\stability_matrix\Data\Assets\Python\cpython-3.10.17-windows-x86_64-none\lib\argparse.py", line 2567, in print_help
+    self._print_message(self.format_help(), file)
+  File "F:\stability_matrix\Data\Assets\Python\cpython-3.10.17-windows-x86_64-none\lib\argparse.py", line 2573, in _print_message
+    file.write(message)
+  File "F:\stability_matrix\Data\Assets\Python\cpython-3.10.17-windows-x86_64-none\lib\encodings\cp1252.py", line 19, in encode
+    return codecs.charmap_encode(input,self.errors,encoding_table)[0]
+UnicodeEncodeError: 'charmap' codec can't encode characters in position 7653-7668: character maps to <undefined>
+[exit 1]
+
+============================================================
+### hv_train.py
+============================================================
+Trying to import sageattention
+Failed to import sageattention
+Traceback (most recent call last):
+  File "F:\__PROJECTS\musubi-tuner\hv_train.py", line 4, in <module>
+    main()
+  File "F:\__PROJECTS\musubi-tuner\src\musubi_tuner\hv_train.py", line 1714, in main
+    args = parser.parse_args()
+  File "F:\stability_matrix\Data\Assets\Python\cpython-3.10.17-windows-x86_64-none\lib\argparse.py", line 1833, in parse_args
+    args, argv = self.parse_known_args(args, namespace)
+  File "F:\stability_matrix\Data\Assets\Python\cpython-3.10.17-windows-x86_64-none\lib\argparse.py", line 1866, in parse_known_args
+    namespace, args = self._parse_known_args(args, namespace)
+  File "F:\stability_matrix\Data\Assets\Python\cpython-3.10.17-windows-x86_64-none\lib\argparse.py", line 2079, in _parse_known_args
+    start_index = consume_optional(start_index)
+  File "F:\stability_matrix\Data\Assets\Python\cpython-3.10.17-windows-x86_64-none\lib\argparse.py", line 2019, in consume_optional
+    take_action(action, args, option_string)
+  File "F:\stability_matrix\Data\Assets\Python\cpython-3.10.17-windows-x86_64-none\lib\argparse.py", line 1943, in take_action
+    action(self, namespace, argument_values, option_string)
+  File "F:\stability_matrix\Data\Assets\Python\cpython-3.10.17-windows-x86_64-none\lib\argparse.py", line 1106, in __call__
+    parser.print_help()
+  File "F:\stability_matrix\Data\Assets\Python\cpython-3.10.17-windows-x86_64-none\lib\argparse.py", line 2567, in print_help
+    self._print_message(self.format_help(), file)
+  File "F:\stability_matrix\Data\Assets\Python\cpython-3.10.17-windows-x86_64-none\lib\argparse.py", line 2573, in _print_message
+    file.write(message)
+  File "F:\stability_matrix\Data\Assets\Python\cpython-3.10.17-windows-x86_64-none\lib\encodings\cp1252.py", line 19, in encode
+    return codecs.charmap_encode(input,self.errors,encoding_table)[0]
+UnicodeEncodeError: 'charmap' codec can't encode characters in position 4897-4912: character maps to <undefined>
+[exit 1]
+
+============================================================
+### hv_generate_video.py
+============================================================
+Trying to import sageattention
+Failed to import sageattention
+Traceback (most recent call last):
+  File "F:\__PROJECTS\musubi-tuner\hv_generate_video.py", line 4, in <module>
+    main()
+  File "F:\__PROJECTS\musubi-tuner\src\musubi_tuner\hv_generate_video.py", line 545, in main
+    args = parse_args()
+  File "F:\__PROJECTS\musubi-tuner\src\musubi_tuner\hv_generate_video.py", line 517, in parse_args
+    args = parser.parse_args()
+  File "F:\stability_matrix\Data\Assets\Python\cpython-3.10.17-windows-x86_64-none\lib\argparse.py", line 1833, in parse_args
+    args, argv = self.parse_known_args(args, namespace)
+  File "F:\stability_matrix\Data\Assets\Python\cpython-3.10.17-windows-x86_64-none\lib\argparse.py", line 1866, in parse_known_args
+    namespace, args = self._parse_known_args(args, namespace)
+  File "F:\stability_matrix\Data\Assets\Python\cpython-3.10.17-windows-x86_64-none\lib\argparse.py", line 2079, in _parse_known_args
+    start_index = consume_optional(start_index)
+  File "F:\stability_matrix\Data\Assets\Python\cpython-3.10.17-windows-x86_64-none\lib\argparse.py", line 2019, in consume_optional
+    take_action(action, args, option_string)
+  File "F:\stability_matrix\Data\Assets\Python\cpython-3.10.17-windows-x86_64-none\lib\argparse.py", line 1943, in take_action
+    action(self, namespace, argument_values, option_string)
+  File "F:\stability_matrix\Data\Assets\Python\cpython-3.10.17-windows-x86_64-none\lib\argparse.py", line 1106, in __call__
+    parser.print_help()
+  File "F:\stability_matrix\Data\Assets\Python\cpython-3.10.17-windows-x86_64-none\lib\argparse.py", line 2567, in print_help
+    self._print_message(self.format_help(), file)
+  File "F:\stability_matrix\Data\Assets\Python\cpython-3.10.17-windows-x86_64-none\lib\argparse.py", line 2573, in _print_message
+    file.write(message)
+  File "F:\stability_matrix\Data\Assets\Python\cpython-3.10.17-windows-x86_64-none\lib\encodings\cp1252.py", line 19, in encode
+    return codecs.charmap_encode(input,self.errors,encoding_table)[0]
+UnicodeEncodeError: 'charmap' codec can't encode characters in position 6485-6491: character maps to <undefined>
+[exit 1]
+
+============================================================
+### hv_1_5_cache_latents.py
+============================================================
+W0416 14:44:07.988000 11088 .venv\Lib\site-packages\torch\utils\flop_counter.py:29] triton not found; flop counting will not work for triton kernels
+usage: hv_1_5_cache_latents.py [-h] --dataset_config DATASET_CONFIG
+                               [--vae VAE] [--vae_dtype VAE_DTYPE]
+                               [--device DEVICE] [--batch_size BATCH_SIZE]
+                               [--num_workers NUM_WORKERS] [--skip_existing]
+                               [--keep_cache]
+                               [--debug_mode {image,console,video}]
+                               [--console_width CONSOLE_WIDTH]
+                               [--console_back CONSOLE_BACK]
+                               [--console_num_images CONSOLE_NUM_IMAGES]
+                               [--disable_cudnn_backend]
+                               [--vae_sample_size VAE_SAMPLE_SIZE]
+                               [--vae_enable_patch_conv] [--i2v]
+                               [--image_encoder IMAGE_ENCODER]
+
+options:
+  -h, --help            show this help message and exit
+  --dataset_config DATASET_CONFIG
+                        path to dataset config .toml file
+  --vae VAE             path to vae checkpoint
+  --vae_dtype VAE_DTYPE
+                        data type for VAE, default depends on model, e.g.,
+                        float16
+  --device DEVICE       device to use, default is cuda if available
+  --batch_size BATCH_SIZE
+                        batch size, override dataset config if dataset batch
+                        size > this
+  --num_workers NUM_WORKERS
+                        number of workers for dataset. default is cpu count-1
+  --skip_existing       skip existing cache files
+  --keep_cache          keep cache files not in dataset
+  --debug_mode {image,console,video}
+                        debug mode
+  --console_width CONSOLE_WIDTH
+                        debug mode: console width
+  --console_back CONSOLE_BACK
+                        debug mode: console background color, one of
+                        ascii_magic.Back
+  --console_num_images CONSOLE_NUM_IMAGES
+                        debug mode: not interactive, number of images to show
+                        for each dataset
+  --disable_cudnn_backend
+                        Disable CUDNN PyTorch backend. May be useful for AMD
+                        GPUs.
+  --vae_sample_size VAE_SAMPLE_SIZE
+                        VAE sample size (height/width). Default 128; set 256
+                        if VRAM is sufficient for better quality; set 0 to
+                        disable tiling.
+  --vae_enable_patch_conv
+                        Enable patch-based convolution in VAE for memory
+                        optimization
+  --i2v                 Cache image features and conditional latents for I2V
+                        training/inference
+  --image_encoder IMAGE_ENCODER
+                        Directory/path of SigLIP Image Encoder (required if
+                        --i2v is set)
+
+============================================================
+### hv_1_5_cache_text_encoder_outputs.py
+============================================================
+Trying to import sageattention
+Failed to import sageattention
+usage: hv_1_5_cache_text_encoder_outputs.py [-h] --dataset_config
+                                            DATASET_CONFIG [--device DEVICE]
+                                            [--batch_size BATCH_SIZE]
+                                            [--num_workers NUM_WORKERS]
+                                            [--skip_existing] [--keep_cache]
+                                            --text_encoder TEXT_ENCODER --byt5
+                                            BYT5 [--fp8_vl]
+
+options:
+  -h, --help            show this help message and exit
+  --dataset_config DATASET_CONFIG
+                        path to dataset config .toml file
+  --device DEVICE       device to use, default is cuda if available
+  --batch_size BATCH_SIZE
+                        batch size, override dataset config if dataset batch
+                        size > this
+  --num_workers NUM_WORKERS
+                        number of workers for dataset. default is cpu count-1
+  --skip_existing       skip existing cache files
+  --keep_cache          keep cache files not in dataset
+  --text_encoder TEXT_ENCODER
+                        Text Encoder (Qwen2.5-VL) checkpoint path
+  --byt5 BYT5           BYT5 text encoder checkpoint path
+  --fp8_vl              use fp8 for Qwen2.5-VL model
+
+============================================================
+### hv_1_5_train_network.py
+============================================================
+Trying to import sageattention
+Failed to import sageattention
+Traceback (most recent call last):
+  File "F:\__PROJECTS\musubi-tuner\hv_1_5_train_network.py", line 4, in <module>
+    main()
+  File "F:\__PROJECTS\musubi-tuner\src\musubi_tuner\hv_1_5_train_network.py", line 496, in main
+    args = parser.parse_args()
+  File "F:\stability_matrix\Data\Assets\Python\cpython-3.10.17-windows-x86_64-none\lib\argparse.py", line 1833, in parse_args
+    args, argv = self.parse_known_args(args, namespace)
+  File "F:\stability_matrix\Data\Assets\Python\cpython-3.10.17-windows-x86_64-none\lib\argparse.py", line 1866, in parse_known_args
+    namespace, args = self._parse_known_args(args, namespace)
+  File "F:\stability_matrix\Data\Assets\Python\cpython-3.10.17-windows-x86_64-none\lib\argparse.py", line 2079, in _parse_known_args
+    start_index = consume_optional(start_index)
+  File "F:\stability_matrix\Data\Assets\Python\cpython-3.10.17-windows-x86_64-none\lib\argparse.py", line 2019, in consume_optional
+    take_action(action, args, option_string)
+  File "F:\stability_matrix\Data\Assets\Python\cpython-3.10.17-windows-x86_64-none\lib\argparse.py", line 1943, in take_action
+    action(self, namespace, argument_values, option_string)
+  File "F:\stability_matrix\Data\Assets\Python\cpython-3.10.17-windows-x86_64-none\lib\argparse.py", line 1106, in __call__
+    parser.print_help()
+  File "F:\stability_matrix\Data\Assets\Python\cpython-3.10.17-windows-x86_64-none\lib\argparse.py", line 2567, in print_help
+    self._print_message(self.format_help(), file)
+  File "F:\stability_matrix\Data\Assets\Python\cpython-3.10.17-windows-x86_64-none\lib\argparse.py", line 2573, in _print_message
+    file.write(message)
+  File "F:\stability_matrix\Data\Assets\Python\cpython-3.10.17-windows-x86_64-none\lib\encodings\cp1252.py", line 19, in encode
+    return codecs.charmap_encode(input,self.errors,encoding_table)[0]
+UnicodeEncodeError: 'charmap' codec can't encode characters in position 8023-8038: character maps to <undefined>
+[exit 1]
+
+============================================================
+### hv_1_5_generate_video.py
+============================================================
+Trying to import sageattention
+Failed to import sageattention
+Traceback (most recent call last):
+  File "F:\__PROJECTS\musubi-tuner\hv_1_5_generate_video.py", line 4, in <module>
+    main()
+  File "F:\__PROJECTS\musubi-tuner\src\musubi_tuner\hv_1_5_generate_video.py", line 1293, in main
+    args = parse_args()
+  File "F:\__PROJECTS\musubi-tuner\src\musubi_tuner\hv_1_5_generate_video.py", line 170, in parse_args
+    args = parser.parse_args()
+  File "F:\stability_matrix\Data\Assets\Python\cpython-3.10.17-windows-x86_64-none\lib\argparse.py", line 1833, in parse_args
+    args, argv = self.parse_known_args(args, namespace)
+  File "F:\stability_matrix\Data\Assets\Python\cpython-3.10.17-windows-x86_64-none\lib\argparse.py", line 1866, in parse_known_args
+    namespace, args = self._parse_known_args(args, namespace)
+  File "F:\stability_matrix\Data\Assets\Python\cpython-3.10.17-windows-x86_64-none\lib\argparse.py", line 2079, in _parse_known_args
+    start_index = consume_optional(start_index)
+  File "F:\stability_matrix\Data\Assets\Python\cpython-3.10.17-windows-x86_64-none\lib\argparse.py", line 2019, in consume_optional
+    take_action(action, args, option_string)
+  File "F:\stability_matrix\Data\Assets\Python\cpython-3.10.17-windows-x86_64-none\lib\argparse.py", line 1943, in take_action
+    action(self, namespace, argument_values, option_string)
+  File "F:\stability_matrix\Data\Assets\Python\cpython-3.10.17-windows-x86_64-none\lib\argparse.py", line 1106, in __call__
+    parser.print_help()
+  File "F:\stability_matrix\Data\Assets\Python\cpython-3.10.17-windows-x86_64-none\lib\argparse.py", line 2567, in print_help
+    self._print_message(self.format_help(), file)
+  File "F:\stability_matrix\Data\Assets\Python\cpython-3.10.17-windows-x86_64-none\lib\argparse.py", line 2573, in _print_message
+    file.write(message)
+  File "F:\stability_matrix\Data\Assets\Python\cpython-3.10.17-windows-x86_64-none\lib\encodings\cp1252.py", line 19, in encode
+    return codecs.charmap_encode(input,self.errors,encoding_table)[0]
+UnicodeEncodeError: 'charmap' codec can't encode characters in position 6482-6488: character maps to <undefined>
+[exit 1]
+
+============================================================
+### fpack_cache_latents.py
+============================================================
+W0416 14:44:27.585000 59232 .venv\Lib\site-packages\torch\utils\flop_counter.py:29] triton not found; flop counting will not work for triton kernels
+usage: fpack_cache_latents.py [-h] --dataset_config DATASET_CONFIG [--vae VAE]
+                              [--vae_dtype VAE_DTYPE] [--device DEVICE]
+                              [--batch_size BATCH_SIZE]
+                              [--num_workers NUM_WORKERS] [--skip_existing]
+                              [--keep_cache]
+                              [--debug_mode {image,console,video}]
+                              [--console_width CONSOLE_WIDTH]
+                              [--console_back CONSOLE_BACK]
+                              [--console_num_images CONSOLE_NUM_IMAGES]
+                              [--disable_cudnn_backend] [--vae_tiling]
+                              [--vae_chunk_size VAE_CHUNK_SIZE]
+                              [--vae_spatial_tile_sample_min_size VAE_SPATIAL_TILE_SAMPLE_MIN_SIZE]
+                              --image_encoder IMAGE_ENCODER [--f1]
+                              [--one_frame] [--one_frame_no_2x]
+                              [--one_frame_no_4x]
+
+options:
+  -h, --help            show this help message and exit
+  --dataset_config DATASET_CONFIG
+                        path to dataset config .toml file
+  --vae VAE             path to vae checkpoint
+  --vae_dtype VAE_DTYPE
+                        data type for VAE, default depends on model, e.g.,
+                        float16
+  --device DEVICE       device to use, default is cuda if available
+  --batch_size BATCH_SIZE
+                        batch size, override dataset config if dataset batch
+                        size > this
+  --num_workers NUM_WORKERS
+                        number of workers for dataset. default is cpu count-1
+  --skip_existing       skip existing cache files
+  --keep_cache          keep cache files not in dataset
+  --debug_mode {image,console,video}
+                        debug mode
+  --console_width CONSOLE_WIDTH
+                        debug mode: console width
+  --console_back CONSOLE_BACK
+                        debug mode: console background color, one of
+                        ascii_magic.Back
+  --console_num_images CONSOLE_NUM_IMAGES
+                        debug mode: not interactive, number of images to show
+                        for each dataset
+  --disable_cudnn_backend
+                        Disable CUDNN PyTorch backend. May be useful for AMD
+                        GPUs.
+  --vae_tiling          enable spatial tiling for VAE, default is False. If
+                        vae_spatial_tile_sample_min_size is set, this is
+                        automatically enabled
+  --vae_chunk_size VAE_CHUNK_SIZE
+                        chunk size for CausalConv3d in VAE
+  --vae_spatial_tile_sample_min_size VAE_SPATIAL_TILE_SAMPLE_MIN_SIZE
+                        spatial tile sample min size for VAE, default 256
+  --image_encoder IMAGE_ENCODER
+                        Image encoder (CLIP) checkpoint path or directory
+  --f1                  Generate cache for F1 model (vanilla (autoregressive)
+                        sampling) instead of Inverted anti-drifting (plain
+                        FramePack)
+  --one_frame           Generate cache for one frame training (single frame,
+                        single section). latent_window_size is used as the
+                        index of the target frame.
+  --one_frame_no_2x     Do not use clean_latents_2x and
+                        clean_latent_2x_indices for one frame training.
+  --one_frame_no_4x     Do not use clean_latents_4x and
+                        clean_latent_4x_indices for one frame training.
+
+============================================================
+### fpack_cache_text_encoder_outputs.py
+============================================================
+W0416 14:44:33.378000 13936 .venv\Lib\site-packages\torch\utils\flop_counter.py:29] triton not found; flop counting will not work for triton kernels
+usage: fpack_cache_text_encoder_outputs.py [-h] --dataset_config
+                                           DATASET_CONFIG [--device DEVICE]
+                                           [--batch_size BATCH_SIZE]
+                                           [--num_workers NUM_WORKERS]
+                                           [--skip_existing] [--keep_cache]
+                                           --text_encoder1 TEXT_ENCODER1
+                                           --text_encoder2 TEXT_ENCODER2
+                                           [--fp8_llm]
+
+options:
+  -h, --help            show this help message and exit
+  --dataset_config DATASET_CONFIG
+                        path to dataset config .toml file
+  --device DEVICE       device to use, default is cuda if available
+  --batch_size BATCH_SIZE
+                        batch size, override dataset config if dataset batch
+                        size > this
+  --num_workers NUM_WORKERS
+                        number of workers for dataset. default is cpu count-1
+  --skip_existing       skip existing cache files
+  --keep_cache          keep cache files not in dataset
+  --text_encoder1 TEXT_ENCODER1
+                        Text Encoder 1 directory
+  --text_encoder2 TEXT_ENCODER2
+                        Text Encoder 2 directory
+  --fp8_llm             use fp8 for Text Encoder 1 (LLM)
+
+============================================================
+### fpack_train_network.py
+============================================================
+W0416 14:44:39.197000 57520 .venv\Lib\site-packages\torch\utils\flop_counter.py:29] triton not found; flop counting will not work for triton kernels
+Xformers is not installed!
+Flash Attn is not installed!
+Sage Attn is not installed!
+Trying to import sageattention
+Failed to import sageattention
+Traceback (most recent call last):
+  File "F:\__PROJECTS\musubi-tuner\fpack_train_network.py", line 4, in <module>
+    main()
+  File "F:\__PROJECTS\musubi-tuner\src\musubi_tuner\fpack_train_network.py", line 622, in main
+    args = parser.parse_args()
+  File "F:\stability_matrix\Data\Assets\Python\cpython-3.10.17-windows-x86_64-none\lib\argparse.py", line 1833, in parse_args
+    args, argv = self.parse_known_args(args, namespace)
+  File "F:\stability_matrix\Data\Assets\Python\cpython-3.10.17-windows-x86_64-none\lib\argparse.py", line 1866, in parse_known_args
+    namespace, args = self._parse_known_args(args, namespace)
+  File "F:\stability_matrix\Data\Assets\Python\cpython-3.10.17-windows-x86_64-none\lib\argparse.py", line 2079, in _parse_known_args
+    start_index = consume_optional(start_index)
+  File "F:\stability_matrix\Data\Assets\Python\cpython-3.10.17-windows-x86_64-none\lib\argparse.py", line 2019, in consume_optional
+    take_action(action, args, option_string)
+  File "F:\stability_matrix\Data\Assets\Python\cpython-3.10.17-windows-x86_64-none\lib\argparse.py", line 1943, in take_action
+    action(self, namespace, argument_values, option_string)
+  File "F:\stability_matrix\Data\Assets\Python\cpython-3.10.17-windows-x86_64-none\lib\argparse.py", line 1106, in __call__
+    parser.print_help()
+  File "F:\stability_matrix\Data\Assets\Python\cpython-3.10.17-windows-x86_64-none\lib\argparse.py", line 2567, in print_help
+    self._print_message(self.format_help(), file)
+  File "F:\stability_matrix\Data\Assets\Python\cpython-3.10.17-windows-x86_64-none\lib\argparse.py", line 2573, in _print_message
+    file.write(message)
+  File "F:\stability_matrix\Data\Assets\Python\cpython-3.10.17-windows-x86_64-none\lib\encodings\cp1252.py", line 19, in encode
+    return codecs.charmap_encode(input,self.errors,encoding_table)[0]
+UnicodeEncodeError: 'charmap' codec can't encode characters in position 8091-8106: character maps to <undefined>
+[exit 1]
+
+============================================================
+### fpack_generate_video.py
+============================================================
+W0416 14:44:45.109000 28616 .venv\Lib\site-packages\torch\utils\flop_counter.py:29] triton not found; flop counting will not work for triton kernels
+Xformers is not installed!
+Flash Attn is not installed!
+Sage Attn is not installed!
+Trying to import sageattention
+Failed to import sageattention
+Traceback (most recent call last):
+  File "F:\__PROJECTS\musubi-tuner\fpack_generate_video.py", line 4, in <module>
+    main()
+  File "F:\__PROJECTS\musubi-tuner\src\musubi_tuner\fpack_generate_video.py", line 2104, in main
+    args = parse_args()
+  File "F:\__PROJECTS\musubi-tuner\src\musubi_tuner\fpack_generate_video.py", line 296, in parse_args
+    args = parser.parse_args()
+  File "F:\stability_matrix\Data\Assets\Python\cpython-3.10.17-windows-x86_64-none\lib\argparse.py", line 1833, in parse_args
+    args, argv = self.parse_known_args(args, namespace)
+  File "F:\stability_matrix\Data\Assets\Python\cpython-3.10.17-windows-x86_64-none\lib\argparse.py", line 1866, in parse_known_args
+    namespace, args = self._parse_known_args(args, namespace)
+  File "F:\stability_matrix\Data\Assets\Python\cpython-3.10.17-windows-x86_64-none\lib\argparse.py", line 2079, in _parse_known_args
+    start_index = consume_optional(start_index)
+  File "F:\stability_matrix\Data\Assets\Python\cpython-3.10.17-windows-x86_64-none\lib\argparse.py", line 2019, in consume_optional
+    take_action(action, args, option_string)
+  File "F:\stability_matrix\Data\Assets\Python\cpython-3.10.17-windows-x86_64-none\lib\argparse.py", line 1943, in take_action
+    action(self, namespace, argument_values, option_string)
+  File "F:\stability_matrix\Data\Assets\Python\cpython-3.10.17-windows-x86_64-none\lib\argparse.py", line 1106, in __call__
+    parser.print_help()
+  File "F:\stability_matrix\Data\Assets\Python\cpython-3.10.17-windows-x86_64-none\lib\argparse.py", line 2567, in print_help
+    self._print_message(self.format_help(), file)
+  File "F:\stability_matrix\Data\Assets\Python\cpython-3.10.17-windows-x86_64-none\lib\argparse.py", line 2573, in _print_message
+    file.write(message)
+  File "F:\stability_matrix\Data\Assets\Python\cpython-3.10.17-windows-x86_64-none\lib\encodings\cp1252.py", line 19, in encode
+    return codecs.charmap_encode(input,self.errors,encoding_table)[0]
+UnicodeEncodeError: 'charmap' codec can't encode characters in position 10854-10860: character maps to <undefined>
+[exit 1]
+
+============================================================
+### flux_kontext_cache_latents.py
+============================================================
+W0416 14:44:51.294000 54852 .venv\Lib\site-packages\torch\utils\flop_counter.py:29] triton not found; flop counting will not work for triton kernels
+Trying to import sageattention
+Failed to import sageattention
+usage: flux_kontext_cache_latents.py [-h] --dataset_config DATASET_CONFIG
+                                     [--vae VAE] [--vae_dtype VAE_DTYPE]
+                                     [--device DEVICE]
+                                     [--batch_size BATCH_SIZE]
+                                     [--num_workers NUM_WORKERS]
+                                     [--skip_existing] [--keep_cache]
+                                     [--debug_mode {image,console,video}]
+                                     [--console_width CONSOLE_WIDTH]
+                                     [--console_back CONSOLE_BACK]
+                                     [--console_num_images CONSOLE_NUM_IMAGES]
+                                     [--disable_cudnn_backend] [--vae_tiling]
+                                     [--vae_chunk_size VAE_CHUNK_SIZE]
+                                     [--vae_spatial_tile_sample_min_size VAE_SPATIAL_TILE_SAMPLE_MIN_SIZE]
+
+options:
+  -h, --help            show this help message and exit
+  --dataset_config DATASET_CONFIG
+                        path to dataset config .toml file
+  --vae VAE             path to vae checkpoint
+  --vae_dtype VAE_DTYPE
+                        data type for VAE, default depends on model, e.g.,
+                        float16
+  --device DEVICE       device to use, default is cuda if available
+  --batch_size BATCH_SIZE
+                        batch size, override dataset config if dataset batch
+                        size > this
+  --num_workers NUM_WORKERS
+                        number of workers for dataset. default is cpu count-1
+  --skip_existing       skip existing cache files
+  --keep_cache          keep cache files not in dataset
+  --debug_mode {image,console,video}
+                        debug mode
+  --console_width CONSOLE_WIDTH
+                        debug mode: console width
+  --console_back CONSOLE_BACK
+                        debug mode: console background color, one of
+                        ascii_magic.Back
+  --console_num_images CONSOLE_NUM_IMAGES
+                        debug mode: not interactive, number of images to show
+                        for each dataset
+  --disable_cudnn_backend
+                        Disable CUDNN PyTorch backend. May be useful for AMD
+                        GPUs.
+  --vae_tiling          enable spatial tiling for VAE, default is False. If
+                        vae_spatial_tile_sample_min_size is set, this is
+                        automatically enabled
+  --vae_chunk_size VAE_CHUNK_SIZE
+                        chunk size for CausalConv3d in VAE
+  --vae_spatial_tile_sample_min_size VAE_SPATIAL_TILE_SAMPLE_MIN_SIZE
+                        spatial tile sample min size for VAE, default 256
+
+============================================================
+### flux_kontext_cache_text_encoder_outputs.py
+============================================================
+Trying to import sageattention
+Failed to import sageattention
+usage: flux_kontext_cache_text_encoder_outputs.py [-h] --dataset_config
+                                                  DATASET_CONFIG
+                                                  [--device DEVICE]
+                                                  [--batch_size BATCH_SIZE]
+                                                  [--num_workers NUM_WORKERS]
+                                                  [--skip_existing]
+                                                  [--keep_cache]
+                                                  --text_encoder1
+                                                  TEXT_ENCODER1
+                                                  --text_encoder2
+                                                  TEXT_ENCODER2 [--fp8_t5]
+
+options:
+  -h, --help            show this help message and exit
+  --dataset_config DATASET_CONFIG
+                        path to dataset config .toml file
+  --device DEVICE       device to use, default is cuda if available
+  --batch_size BATCH_SIZE
+                        batch size, override dataset config if dataset batch
+                        size > this
+  --num_workers NUM_WORKERS
+                        number of workers for dataset. default is cpu count-1
+  --skip_existing       skip existing cache files
+  --keep_cache          keep cache files not in dataset
+  --text_encoder1 TEXT_ENCODER1
+                        text encoder (T5XXL) checkpoint path
+  --text_encoder2 TEXT_ENCODER2
+                        text encoder 2 (CLIP-L) checkpoint path
+  --fp8_t5              use fp8 for Text Encoder model
+
+============================================================
+### flux_kontext_train_network.py
+============================================================
+Trying to import sageattention
+Failed to import sageattention
+Traceback (most recent call last):
+  File "F:\__PROJECTS\musubi-tuner\flux_kontext_train_network.py", line 4, in <module>
+    main()
+  File "F:\__PROJECTS\musubi-tuner\src\musubi_tuner\flux_kontext_train_network.py", line 393, in main
+    args = parser.parse_args()
+  File "F:\stability_matrix\Data\Assets\Python\cpython-3.10.17-windows-x86_64-none\lib\argparse.py", line 1833, in parse_args
+    args, argv = self.parse_known_args(args, namespace)
+  File "F:\stability_matrix\Data\Assets\Python\cpython-3.10.17-windows-x86_64-none\lib\argparse.py", line 1866, in parse_known_args
+    namespace, args = self._parse_known_args(args, namespace)
+  File "F:\stability_matrix\Data\Assets\Python\cpython-3.10.17-windows-x86_64-none\lib\argparse.py", line 2079, in _parse_known_args
+    start_index = consume_optional(start_index)
+  File "F:\stability_matrix\Data\Assets\Python\cpython-3.10.17-windows-x86_64-none\lib\argparse.py", line 2019, in consume_optional
+    take_action(action, args, option_string)
+  File "F:\stability_matrix\Data\Assets\Python\cpython-3.10.17-windows-x86_64-none\lib\argparse.py", line 1943, in take_action
+    action(self, namespace, argument_values, option_string)
+  File "F:\stability_matrix\Data\Assets\Python\cpython-3.10.17-windows-x86_64-none\lib\argparse.py", line 1106, in __call__
+    parser.print_help()
+  File "F:\stability_matrix\Data\Assets\Python\cpython-3.10.17-windows-x86_64-none\lib\argparse.py", line 2567, in print_help
+    self._print_message(self.format_help(), file)
+  File "F:\stability_matrix\Data\Assets\Python\cpython-3.10.17-windows-x86_64-none\lib\argparse.py", line 2573, in _print_message
+    file.write(message)
+  File "F:\stability_matrix\Data\Assets\Python\cpython-3.10.17-windows-x86_64-none\lib\encodings\cp1252.py", line 19, in encode
+    return codecs.charmap_encode(input,self.errors,encoding_table)[0]
+UnicodeEncodeError: 'charmap' codec can't encode characters in position 8668-8683: character maps to <undefined>
+[exit 1]
+
+============================================================
+### flux_kontext_generate_image.py
+============================================================
+Trying to import sageattention
+Failed to import sageattention
+Traceback (most recent call last):
+  File "F:\__PROJECTS\musubi-tuner\flux_kontext_generate_image.py", line 4, in <module>
+    main()
+  File "F:\__PROJECTS\musubi-tuner\src\musubi_tuner\flux_kontext_generate_image.py", line 1092, in main
+    args = parse_args()
+  File "F:\__PROJECTS\musubi-tuner\src\musubi_tuner\flux_kontext_generate_image.py", line 135, in parse_args
+    args = parser.parse_args()
+  File "F:\stability_matrix\Data\Assets\Python\cpython-3.10.17-windows-x86_64-none\lib\argparse.py", line 1833, in parse_args
+    args, argv = self.parse_known_args(args, namespace)
+  File "F:\stability_matrix\Data\Assets\Python\cpython-3.10.17-windows-x86_64-none\lib\argparse.py", line 1866, in parse_known_args
+    namespace, args = self._parse_known_args(args, namespace)
+  File "F:\stability_matrix\Data\Assets\Python\cpython-3.10.17-windows-x86_64-none\lib\argparse.py", line 2079, in _parse_known_args
+    start_index = consume_optional(start_index)
+  File "F:\stability_matrix\Data\Assets\Python\cpython-3.10.17-windows-x86_64-none\lib\argparse.py", line 2019, in consume_optional
+    take_action(action, args, option_string)
+  File "F:\stability_matrix\Data\Assets\Python\cpython-3.10.17-windows-x86_64-none\lib\argparse.py", line 1943, in take_action
+    action(self, namespace, argument_values, option_string)
+  File "F:\stability_matrix\Data\Assets\Python\cpython-3.10.17-windows-x86_64-none\lib\argparse.py", line 1106, in __call__
+    parser.print_help()
+  File "F:\stability_matrix\Data\Assets\Python\cpython-3.10.17-windows-x86_64-none\lib\argparse.py", line 2567, in print_help
+    self._print_message(self.format_help(), file)
+  File "F:\stability_matrix\Data\Assets\Python\cpython-3.10.17-windows-x86_64-none\lib\argparse.py", line 2573, in _print_message
+    file.write(message)
+  File "F:\stability_matrix\Data\Assets\Python\cpython-3.10.17-windows-x86_64-none\lib\encodings\cp1252.py", line 19, in encode
+    return codecs.charmap_encode(input,self.errors,encoding_table)[0]
+UnicodeEncodeError: 'charmap' codec can't encode characters in position 5198-5204: character maps to <undefined>
+[exit 1]
+
+============================================================
+### qwen_image_cache_latents.py
+============================================================
+W0416 14:45:10.080000 15900 .venv\Lib\site-packages\torch\utils\flop_counter.py:29] triton not found; flop counting will not work for triton kernels
+Trying to import sageattention
+Failed to import sageattention
+usage: qwen_image_cache_latents.py [-h] --dataset_config DATASET_CONFIG
+                                   [--vae VAE] [--vae_dtype VAE_DTYPE]
+                                   [--device DEVICE] [--batch_size BATCH_SIZE]
+                                   [--num_workers NUM_WORKERS]
+                                   [--skip_existing] [--keep_cache]
+                                   [--debug_mode {image,console,video}]
+                                   [--console_width CONSOLE_WIDTH]
+                                   [--console_back CONSOLE_BACK]
+                                   [--console_num_images CONSOLE_NUM_IMAGES]
+                                   [--disable_cudnn_backend] [--vae_tiling]
+                                   [--vae_chunk_size VAE_CHUNK_SIZE]
+                                   [--vae_spatial_tile_sample_min_size VAE_SPATIAL_TILE_SAMPLE_MIN_SIZE]
+                                   [--edit] [--edit_plus]
+                                   [--model_version MODEL_VERSION]
+
+options:
+  -h, --help            show this help message and exit
+  --dataset_config DATASET_CONFIG
+                        path to dataset config .toml file
+  --vae VAE             path to vae checkpoint
+  --vae_dtype VAE_DTYPE
+                        data type for VAE, default depends on model, e.g.,
+                        float16
+  --device DEVICE       device to use, default is cuda if available
+  --batch_size BATCH_SIZE
+                        batch size, override dataset config if dataset batch
+                        size > this
+  --num_workers NUM_WORKERS
+                        number of workers for dataset. default is cpu count-1
+  --skip_existing       skip existing cache files
+  --keep_cache          keep cache files not in dataset
+  --debug_mode {image,console,video}
+                        debug mode
+  --console_width CONSOLE_WIDTH
+                        debug mode: console width
+  --console_back CONSOLE_BACK
+                        debug mode: console background color, one of
+                        ascii_magic.Back
+  --console_num_images CONSOLE_NUM_IMAGES
+                        debug mode: not interactive, number of images to show
+                        for each dataset
+  --disable_cudnn_backend
+                        Disable CUDNN PyTorch backend. May be useful for AMD
+                        GPUs.
+  --vae_tiling          enable spatial tiling for VAE, default is False. If
+                        vae_spatial_tile_sample_min_size is set, this is
+                        automatically enabled
+  --vae_chunk_size VAE_CHUNK_SIZE
+                        chunk size for CausalConv3d in VAE
+  --vae_spatial_tile_sample_min_size VAE_SPATIAL_TILE_SAMPLE_MIN_SIZE
+                        spatial tile sample min size for VAE, default 256
+  --edit                Enable Qwen-Image-Edit original, recommend
+                        `--model_version edit` instead
+  --edit_plus           Enable Qwen-Image-Edit-2509 (plus), recommend
+                        `--model_version edit-2509` instead
+  --model_version MODEL_VERSION
+                        training for Qwen-Image model version, e.g.,
+                        'original', 'layered', 'edit', 'edit-2509',
+                        'edit-2511' etc.
+
+============================================================
+### qwen_image_cache_text_encoder_outputs.py
+============================================================
+Trying to import sageattention
+Failed to import sageattention
+usage: qwen_image_cache_text_encoder_outputs.py [-h] --dataset_config
+                                                DATASET_CONFIG
+                                                [--device DEVICE]
+                                                [--batch_size BATCH_SIZE]
+                                                [--num_workers NUM_WORKERS]
+                                                [--skip_existing]
+                                                [--keep_cache] --text_encoder
+                                                TEXT_ENCODER [--fp8_vl]
+                                                [--edit] [--edit_plus]
+                                                [--model_version MODEL_VERSION]
+
+options:
+  -h, --help            show this help message and exit
+  --dataset_config DATASET_CONFIG
+                        path to dataset config .toml file
+  --device DEVICE       device to use, default is cuda if available
+  --batch_size BATCH_SIZE
+                        batch size, override dataset config if dataset batch
+                        size > this
+  --num_workers NUM_WORKERS
+                        number of workers for dataset. default is cpu count-1
+  --skip_existing       skip existing cache files
+  --keep_cache          keep cache files not in dataset
+  --text_encoder TEXT_ENCODER
+                        Text Encoder (Qwen2.5-VL) checkpoint path
+  --fp8_vl              use fp8 for Text Encoder model
+  --edit                Enable Qwen-Image-Edit original, recommend
+                        `--model_version edit` instead
+  --edit_plus           Enable Qwen-Image-Edit-2509 (plus), recommend
+                        `--model_version edit-2509` instead
+  --model_version MODEL_VERSION
+                        training for Qwen-Image model version, e.g.,
+                        'original', 'layered', 'edit', 'edit-2509',
+                        'edit-2511' etc.
+
+============================================================
+### qwen_image_train_network.py
+============================================================
+Trying to import sageattention
+Failed to import sageattention
+Traceback (most recent call last):
+  File "F:\__PROJECTS\musubi-tuner\qwen_image_train_network.py", line 4, in <module>
+    main()
+  File "F:\__PROJECTS\musubi-tuner\src\musubi_tuner\qwen_image_train_network.py", line 607, in main
+    args = parser.parse_args()
+  File "F:\stability_matrix\Data\Assets\Python\cpython-3.10.17-windows-x86_64-none\lib\argparse.py", line 1833, in parse_args
+    args, argv = self.parse_known_args(args, namespace)
+  File "F:\stability_matrix\Data\Assets\Python\cpython-3.10.17-windows-x86_64-none\lib\argparse.py", line 1866, in parse_known_args
+    namespace, args = self._parse_known_args(args, namespace)
+  File "F:\stability_matrix\Data\Assets\Python\cpython-3.10.17-windows-x86_64-none\lib\argparse.py", line 2079, in _parse_known_args
+    start_index = consume_optional(start_index)
+  File "F:\stability_matrix\Data\Assets\Python\cpython-3.10.17-windows-x86_64-none\lib\argparse.py", line 2019, in consume_optional
+    take_action(action, args, option_string)
+  File "F:\stability_matrix\Data\Assets\Python\cpython-3.10.17-windows-x86_64-none\lib\argparse.py", line 1943, in take_action
+    action(self, namespace, argument_values, option_string)
+  File "F:\stability_matrix\Data\Assets\Python\cpython-3.10.17-windows-x86_64-none\lib\argparse.py", line 1106, in __call__
+    parser.print_help()
+  File "F:\stability_matrix\Data\Assets\Python\cpython-3.10.17-windows-x86_64-none\lib\argparse.py", line 2567, in print_help
+    self._print_message(self.format_help(), file)
+  File "F:\stability_matrix\Data\Assets\Python\cpython-3.10.17-windows-x86_64-none\lib\argparse.py", line 2573, in _print_message
+    file.write(message)
+  File "F:\stability_matrix\Data\Assets\Python\cpython-3.10.17-windows-x86_64-none\lib\encodings\cp1252.py", line 19, in encode
+    return codecs.charmap_encode(input,self.errors,encoding_table)[0]
+UnicodeEncodeError: 'charmap' codec can't encode characters in position 8492-8507: character maps to <undefined>
+[exit 1]
+
+============================================================
+### qwen_image_train.py
+============================================================
+Trying to import sageattention
+Failed to import sageattention
+Traceback (most recent call last):
+  File "F:\__PROJECTS\musubi-tuner\qwen_image_train.py", line 4, in <module>
+    main()
+  File "F:\__PROJECTS\musubi-tuner\src\musubi_tuner\qwen_image_train.py", line 779, in main
+    args = parser.parse_args()
+  File "F:\stability_matrix\Data\Assets\Python\cpython-3.10.17-windows-x86_64-none\lib\argparse.py", line 1833, in parse_args
+    args, argv = self.parse_known_args(args, namespace)
+  File "F:\stability_matrix\Data\Assets\Python\cpython-3.10.17-windows-x86_64-none\lib\argparse.py", line 1866, in parse_known_args
+    namespace, args = self._parse_known_args(args, namespace)
+  File "F:\stability_matrix\Data\Assets\Python\cpython-3.10.17-windows-x86_64-none\lib\argparse.py", line 2079, in _parse_known_args
+    start_index = consume_optional(start_index)
+  File "F:\stability_matrix\Data\Assets\Python\cpython-3.10.17-windows-x86_64-none\lib\argparse.py", line 2019, in consume_optional
+    take_action(action, args, option_string)
+  File "F:\stability_matrix\Data\Assets\Python\cpython-3.10.17-windows-x86_64-none\lib\argparse.py", line 1943, in take_action
+    action(self, namespace, argument_values, option_string)
+  File "F:\stability_matrix\Data\Assets\Python\cpython-3.10.17-windows-x86_64-none\lib\argparse.py", line 1106, in __call__
+    parser.print_help()
+  File "F:\stability_matrix\Data\Assets\Python\cpython-3.10.17-windows-x86_64-none\lib\argparse.py", line 2567, in print_help
+    self._print_message(self.format_help(), file)
+  File "F:\stability_matrix\Data\Assets\Python\cpython-3.10.17-windows-x86_64-none\lib\argparse.py", line 2573, in _print_message
+    file.write(message)
+  File "F:\stability_matrix\Data\Assets\Python\cpython-3.10.17-windows-x86_64-none\lib\encodings\cp1252.py", line 19, in encode
+    return codecs.charmap_encode(input,self.errors,encoding_table)[0]
+UnicodeEncodeError: 'charmap' codec can't encode characters in position 7555-7570: character maps to <undefined>
+[exit 1]
+
+============================================================
+### qwen_image_generate_image.py
+============================================================
+Trying to import sageattention
+Failed to import sageattention
+Traceback (most recent call last):
+  File "F:\__PROJECTS\musubi-tuner\qwen_image_generate_image.py", line 4, in <module>
+    main()
+  File "F:\__PROJECTS\musubi-tuner\src\musubi_tuner\qwen_image_generate_image.py", line 1409, in main
+    args = parse_args()
+  File "F:\__PROJECTS\musubi-tuner\src\musubi_tuner\qwen_image_generate_image.py", line 197, in parse_args
+    args = parser.parse_args()
+  File "F:\stability_matrix\Data\Assets\Python\cpython-3.10.17-windows-x86_64-none\lib\argparse.py", line 1833, in parse_args
+    args, argv = self.parse_known_args(args, namespace)
+  File "F:\stability_matrix\Data\Assets\Python\cpython-3.10.17-windows-x86_64-none\lib\argparse.py", line 1866, in parse_known_args
+    namespace, args = self._parse_known_args(args, namespace)
+  File "F:\stability_matrix\Data\Assets\Python\cpython-3.10.17-windows-x86_64-none\lib\argparse.py", line 2079, in _parse_known_args
+    start_index = consume_optional(start_index)
+  File "F:\stability_matrix\Data\Assets\Python\cpython-3.10.17-windows-x86_64-none\lib\argparse.py", line 2019, in consume_optional
+    take_action(action, args, option_string)
+  File "F:\stability_matrix\Data\Assets\Python\cpython-3.10.17-windows-x86_64-none\lib\argparse.py", line 1943, in take_action
+    action(self, namespace, argument_values, option_string)
+  File "F:\stability_matrix\Data\Assets\Python\cpython-3.10.17-windows-x86_64-none\lib\argparse.py", line 1106, in __call__
+    parser.print_help()
+  File "F:\stability_matrix\Data\Assets\Python\cpython-3.10.17-windows-x86_64-none\lib\argparse.py", line 2567, in print_help
+    self._print_message(self.format_help(), file)
+  File "F:\stability_matrix\Data\Assets\Python\cpython-3.10.17-windows-x86_64-none\lib\argparse.py", line 2573, in _print_message
+    file.write(message)
+  File "F:\stability_matrix\Data\Assets\Python\cpython-3.10.17-windows-x86_64-none\lib\encodings\cp1252.py", line 19, in encode
+    return codecs.charmap_encode(input,self.errors,encoding_table)[0]
+UnicodeEncodeError: 'charmap' codec can't encode characters in position 8195-8201: character maps to <undefined>
+[exit 1]
+
+============================================================
+### kandinsky5_cache_latents.py
+============================================================
+W0416 14:45:32.388000 16760 .venv\Lib\site-packages\torch\utils\flop_counter.py:29] triton not found; flop counting will not work for triton kernels
+usage: kandinsky5_cache_latents.py [-h] --dataset_config DATASET_CONFIG
+                                   [--vae VAE] [--vae_dtype VAE_DTYPE]
+                                   [--device DEVICE] [--batch_size BATCH_SIZE]
+                                   [--num_workers NUM_WORKERS]
+                                   [--skip_existing] [--keep_cache]
+                                   [--debug_mode {image,console,video}]
+                                   [--console_width CONSOLE_WIDTH]
+                                   [--console_back CONSOLE_BACK]
+                                   [--console_num_images CONSOLE_NUM_IMAGES]
+                                   [--disable_cudnn_backend] [--nabla_resize]
+
+options:
+  -h, --help            show this help message and exit
+  --dataset_config DATASET_CONFIG
+                        path to dataset config .toml file
+  --vae VAE             path to vae checkpoint
+  --vae_dtype VAE_DTYPE
+                        data type for VAE, default depends on model, e.g.,
+                        float16
+  --device DEVICE       device to use, default is cuda if available
+  --batch_size BATCH_SIZE
+                        batch size, override dataset config if dataset batch
+                        size > this
+  --num_workers NUM_WORKERS
+                        number of workers for dataset. default is cpu count-1
+  --skip_existing       skip existing cache files
+  --keep_cache          keep cache files not in dataset
+  --debug_mode {image,console,video}
+                        debug mode
+  --console_width CONSOLE_WIDTH
+                        debug mode: console width
+  --console_back CONSOLE_BACK
+                        debug mode: console background color, one of
+                        ascii_magic.Back
+  --console_num_images CONSOLE_NUM_IMAGES
+                        debug mode: not interactive, number of images to show
+                        for each dataset
+  --disable_cudnn_backend
+                        Disable CUDNN PyTorch backend. May be useful for AMD
+                        GPUs.
+  --nabla_resize        Resize inputs to the next multiple of 128 for NABLA-
+                        compatible latents (H/W divisible by 16 after VAE).
+
+============================================================
+### kandinsky5_cache_text_encoder_outputs.py
+============================================================
+usage: kandinsky5_cache_text_encoder_outputs.py [-h] --dataset_config
+                                                DATASET_CONFIG
+                                                [--device DEVICE]
+                                                [--batch_size BATCH_SIZE]
+                                                [--num_workers NUM_WORKERS]
+                                                [--skip_existing]
+                                                [--keep_cache]
+                                                --text_encoder_qwen
+                                                TEXT_ENCODER_QWEN
+                                                --text_encoder_clip
+                                                TEXT_ENCODER_CLIP
+                                                [--qwen_max_length QWEN_MAX_LENGTH]
+                                                [--clip_max_length CLIP_MAX_LENGTH]
+                                                [--quantized_qwen]
+
+options:
+  -h, --help            show this help message and exit
+  --dataset_config DATASET_CONFIG
+                        path to dataset config .toml file
+  --device DEVICE       device to use, default is cuda if available
+  --batch_size BATCH_SIZE
+                        batch size, override dataset config if dataset batch
+                        size > this
+  --num_workers NUM_WORKERS
+                        number of workers for dataset. default is cpu count-1
+  --skip_existing       skip existing cache files
+  --keep_cache          keep cache files not in dataset
+  --text_encoder_qwen TEXT_ENCODER_QWEN
+                        Qwen2.5-VL checkpoint path
+  --text_encoder_clip TEXT_ENCODER_CLIP
+                        CLIP text encoder checkpoint path
+  --qwen_max_length QWEN_MAX_LENGTH
+                        Max length for Qwen tokenizer
+  --clip_max_length CLIP_MAX_LENGTH
+                        Max length for CLIP tokenizer
+  --quantized_qwen      Load Qwen text encoder in 4bit mode
+
+============================================================
+### kandinsky5_train_network.py
+============================================================
+W0416 14:45:45.370000 61292 .venv\Lib\site-packages\torch\utils\flop_counter.py:29] triton not found; flop counting will not work for triton kernels
+Trying to import sageattention
+Failed to import sageattention
+Traceback (most recent call last):
+  File "F:\__PROJECTS\musubi-tuner\kandinsky5_train_network.py", line 4, in <module>
+    main()
+  File "F:\__PROJECTS\musubi-tuner\src\musubi_tuner\kandinsky5_train_network.py", line 951, in main
+    args = parser.parse_args()
+  File "F:\stability_matrix\Data\Assets\Python\cpython-3.10.17-windows-x86_64-none\lib\argparse.py", line 1833, in parse_args
+    args, argv = self.parse_known_args(args, namespace)
+  File "F:\stability_matrix\Data\Assets\Python\cpython-3.10.17-windows-x86_64-none\lib\argparse.py", line 1866, in parse_known_args
+    namespace, args = self._parse_known_args(args, namespace)
+  File "F:\stability_matrix\Data\Assets\Python\cpython-3.10.17-windows-x86_64-none\lib\argparse.py", line 2079, in _parse_known_args
+    start_index = consume_optional(start_index)
+  File "F:\stability_matrix\Data\Assets\Python\cpython-3.10.17-windows-x86_64-none\lib\argparse.py", line 2019, in consume_optional
+    take_action(action, args, option_string)
+  File "F:\stability_matrix\Data\Assets\Python\cpython-3.10.17-windows-x86_64-none\lib\argparse.py", line 1943, in take_action
+    action(self, namespace, argument_values, option_string)
+  File "F:\stability_matrix\Data\Assets\Python\cpython-3.10.17-windows-x86_64-none\lib\argparse.py", line 1106, in __call__
+    parser.print_help()
+  File "F:\stability_matrix\Data\Assets\Python\cpython-3.10.17-windows-x86_64-none\lib\argparse.py", line 2567, in print_help
+    self._print_message(self.format_help(), file)
+  File "F:\stability_matrix\Data\Assets\Python\cpython-3.10.17-windows-x86_64-none\lib\argparse.py", line 2573, in _print_message
+    file.write(message)
+  File "F:\stability_matrix\Data\Assets\Python\cpython-3.10.17-windows-x86_64-none\lib\encodings\cp1252.py", line 19, in encode
+    return codecs.charmap_encode(input,self.errors,encoding_table)[0]
+UnicodeEncodeError: 'charmap' codec can't encode characters in position 9042-9057: character maps to <undefined>
+[exit 1]
+
+============================================================
+### kandinsky5_generate_video.py
+============================================================
+W0416 14:45:51.316000 49744 .venv\Lib\site-packages\torch\utils\flop_counter.py:29] triton not found; flop counting will not work for triton kernels
+Trying to import sageattention
+Failed to import sageattention
+usage: kandinsky5_generate_video.py [-h]
+                                    [--task {k5-lite-t2i-hd,k5-lite-i2i-hd,k5-lite-t2v-5s-sd,k5-lite-t2v-10s-sd,k5-lite-i2v-5s-sd,k5-pro-t2v-5s-sd,k5-pro-t2v-5s-hd,k5-pro-t2v-10s-sd,k5-pro-t2v-10s-hd,k5-pro-i2v-5s-sd,k5-pro-i2v-5s-hd,k5-lite-t2v-5s-distil-sd,k5-lite-t2v-10s-distil-sd,k5-lite-t2v-5s-nocfg-sd,k5-lite-t2v-10s-nocfg-sd,k5-lite-t2v-5s-pretrain-sd,k5-lite-t2v-10s-pretrain-sd}]
+                                    --prompt PROMPT
+                                    [--negative_prompt NEGATIVE_PROMPT]
+                                    [--i IMAGE] [--image_last IMAGE_LAST]
+                                    --output OUTPUT [--width WIDTH]
+                                    [--height HEIGHT] [--frames FRAMES]
+                                    [--steps STEPS] [--guidance GUIDANCE]
+                                    [--scheduler_scale SCHEDULER_SCALE]
+                                    [--seed SEED] [--device DEVICE]
+                                    [--dit DIT] [--vae VAE]
+                                    [--text_encoder_qwen TEXT_ENCODER_QWEN]
+                                    [--text_encoder_clip TEXT_ENCODER_CLIP]
+                                    [--dtype {bfloat16,float16,float32}]
+                                    [--blocks_to_swap BLOCKS_TO_SWAP]
+                                    [--offload_dit_during_sampling]
+                                    [--fp8_base] [--fp8_scaled] [--fp8_fast]
+                                    [--disable_numpy_memmap] [--sdpa]
+                                    [--flash_attn] [--flash3] [--sage_attn]
+                                    [--xformers]
+                                    [--lora_weight [LORA_WEIGHT ...]]
+                                    [--lora_multiplier [LORA_MULTIPLIER ...]]
+
+Kandinsky5 sampling (mirrors training sampler, no training)
+
+options:
+  -h, --help            show this help message and exit
+  --task {k5-lite-t2i-hd,k5-lite-i2i-hd,k5-lite-t2v-5s-sd,k5-lite-t2v-10s-sd,k5-lite-i2v-5s-sd,k5-pro-t2v-5s-sd,k5-pro-t2v-5s-hd,k5-pro-t2v-10s-sd,k5-pro-t2v-10s-hd,k5-pro-i2v-5s-sd,k5-pro-i2v-5s-hd,k5-lite-t2v-5s-distil-sd,k5-lite-t2v-10s-distil-sd,k5-lite-t2v-5s-nocfg-sd,k5-lite-t2v-10s-nocfg-sd,k5-lite-t2v-5s-pretrain-sd,k5-lite-t2v-10s-pretrain-sd}
+  --prompt PROMPT
+  --negative_prompt NEGATIVE_PROMPT
+  --i IMAGE, --image IMAGE
+                        Init image path for i2v-style seeding (first frame)
+  --image_last IMAGE_LAST
+                        Optional last-frame image path for i2v first_last
+                        conditioning
+  --output OUTPUT
+  --width WIDTH
+  --height HEIGHT
+  --frames FRAMES
+  --steps STEPS
+  --guidance GUIDANCE
+  --scheduler_scale SCHEDULER_SCALE
+  --seed SEED
+  --device DEVICE
+  --dit DIT
+  --vae VAE
+  --text_encoder_qwen TEXT_ENCODER_QWEN
+  --text_encoder_clip TEXT_ENCODER_CLIP
+  --dtype {bfloat16,float16,float32}
+  --blocks_to_swap BLOCKS_TO_SWAP
+  --offload_dit_during_sampling
+  --fp8_base
+  --fp8_scaled
+  --fp8_fast
+  --disable_numpy_memmap
+  --sdpa                use SDPA for visual attention
+  --flash_attn          use FlashAttention 2 for visual attention
+  --flash3              use FlashAttention 3 for visual attention
+  --sage_attn           use SageAttention for visual attention
+  --xformers            use xformers for visual attention
+  --lora_weight [LORA_WEIGHT ...]
+                        LoRA weight path(s) to merge for inference
+  --lora_multiplier [LORA_MULTIPLIER ...]
+                        LoRA multiplier(s), align with lora_weight order
+
+============================================================
+### convert_lora.py
+============================================================
+usage: convert_lora.py [-h] --input INPUT --output OUTPUT --target
+                       {other,default} [--diffusers_prefix DIFFUSERS_PREFIX]
+
+Convert LoRA/LoHa/LoKr weights between default and other formats
+
+options:
+  -h, --help            show this help message and exit
+  --input INPUT         input model file
+  --output OUTPUT       output model file
+  --target {other,default}
+                        target format
+  --diffusers_prefix DIFFUSERS_PREFIX
+                        prefix for Diffusers weights, default is None (use
+                        `diffusion_model`)
+
+============================================================
+### merge_lora.py
+============================================================
+Trying to import sageattention
+Failed to import sageattention
+usage: merge_lora.py [-h] --dit DIT [--dit_in_channels DIT_IN_CHANNELS]
+                     [--lora_weight [LORA_WEIGHT ...]]
+                     [--lora_multiplier [LORA_MULTIPLIER ...]]
+                     --save_merged_model SAVE_MERGED_MODEL [--device DEVICE]
+
+HunyuanVideo model merger script
+
+options:
+  -h, --help            show this help message and exit
+  --dit DIT             DiT checkpoint path or directory
+  --dit_in_channels DIT_IN_CHANNELS
+                        input channels for DiT, default is 16, skyreels I2V is
+                        32
+  --lora_weight [LORA_WEIGHT ...]
+                        LoRA weight path
+  --lora_multiplier [LORA_MULTIPLIER ...]
+                        LoRA multiplier (can specify multiple values)
+  --save_merged_model SAVE_MERGED_MODEL
+                        Path to save the merged model
+  --device DEVICE       Device to use for merging
+
+============================================================
+### lora_post_hoc_ema.py
+============================================================
+usage: lora_post_hoc_ema.py [-h] [--no_sort] [--beta BETA] [--beta2 BETA2]
+                            [--sigma_rel SIGMA_REL] --output_file OUTPUT_FILE
+                            path [path ...]
+
+Merge LoRA weights with Post-Hoc EMA method.
+
+positional arguments:
+  path                  List of paths to the LoRA weight files.
+
+options:
+  -h, --help            show this help message and exit
+  --no_sort             Do not sort the files by modification time.
+  --beta BETA           Decay rate for merging weights.
+  --beta2 BETA2         Decay rate for merging weights for linear
+                        interpolation.
+  --sigma_rel SIGMA_REL
+                        Relative sigma for Power Function EMA, default is None
+                        (linear interpolation).
+  --output_file OUTPUT_FILE
+                        Output file path for merged weights.
+
+============================================================
+### qwen_extract_lora.py
+============================================================
+usage: qwen_extract_lora.py [-h] --model_org MODEL_ORG --model_tuned
+                            MODEL_TUNED --save_to SAVE_TO [--dim DIM]
+                            [--device DEVICE]
+                            [--clamp_quantile CLAMP_QUANTILE]
+                            [--mem_eff_safe_open]
+                            [--save_precision {None,float,fp16,bf16}]
+                            [--no_metadata]
+
+options:
+  -h, --help            show this help message and exit
+  --model_org MODEL_ORG
+  --model_tuned MODEL_TUNED
+  --save_to SAVE_TO
+  --dim DIM
+  --device DEVICE
+  --clamp_quantile CLAMP_QUANTILE
+  --mem_eff_safe_open
+  --save_precision {None,float,fp16,bf16}
+  --no_metadata
+
+============================================================
+### caption_images_by_qwen_vl.py
+============================================================
+Trying to import sageattention
+Failed to import sageattention
+usage: caption_images_by_qwen_vl.py [-h] --image_dir IMAGE_DIR --model_path
+                                    MODEL_PATH [--output_file OUTPUT_FILE]
+                                    [--max_new_tokens MAX_NEW_TOKENS]
+                                    [--prompt PROMPT] [--max_size MAX_SIZE]
+                                    [--fp8_vl] [--output_format {jsonl,text}]
+
+Generate captions for images using Qwen2.5-VL
+
+options:
+  -h, --help            show this help message and exit
+  --image_dir IMAGE_DIR
+                        Path to directory containing images
+  --model_path MODEL_PATH
+                        Path to Qwen2.5-VL model
+  --output_file OUTPUT_FILE
+                        Output JSONL file path (required for 'jsonl' format)
+  --max_new_tokens MAX_NEW_TOKENS
+                        Maximum number of new tokens to generate (default:
+                        1024)
+  --prompt PROMPT       Custom prompt for caption generation (supports \n for
+                        newlines)
+  --max_size MAX_SIZE   Maximum image size (default: 1280). The images are
+                        resized to fit the total pixel area within (max_size x
+                        max_size)
+  --fp8_vl              Load Qwen2.5-VL model in fp8 precision
+  --output_format {jsonl,text}
+                        Output format: 'jsonl' for JSONL file or 'text' for
+                        individual text files (default: jsonl)
+
+DONE

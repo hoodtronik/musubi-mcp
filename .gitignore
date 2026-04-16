@@ -1,0 +1,46 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+*.egg
+.Python
+build/
+dist/
+*.so
+
+# Virtual envs
+.venv/
+venv/
+env/
+
+# Packaging / uv
+.uv/
+uv.lock
+
+# Testing / coverage
+.pytest_cache/
+.coverage
+htmlcov/
+.tox/
+.mypy_cache/
+.ruff_cache/
+
+# Editor / OS
+.vscode/
+.idea/
+*.swp
+.DS_Store
+Thumbs.db
+
+# Secrets
+.env
+.env.local
+.env.*.local
+
+# Local settings
+.claude/settings.local.json
+
+# Logs / scratch
+*.log
+scratch/
+tmp/
