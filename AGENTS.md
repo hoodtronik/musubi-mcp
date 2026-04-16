@@ -2,6 +2,13 @@
 
 This file is read by cross-agent tools (Cursor, Codex, Gemini CLI, Copilot, etc.).
 
+**For collaboration context** (developer preferences, git flow, response
+style, ecosystem overview, cross-repo cheat sheet), read
+**[AGENT_CONTEXT.md](AGENT_CONTEXT.md)** first. It is PC-agnostic and
+complements this file: AGENTS.md covers the rules for modifying code in
+*this* repo; AGENT_CONTEXT.md covers how to work with the developer
+across the ecosystem.
+
 ## CLAUDE-NOTE convention
 
 Code changes made by Claude Code may be marked with inline notes prefixed
