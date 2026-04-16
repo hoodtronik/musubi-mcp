@@ -1,8 +1,8 @@
 # musubi-mcp
 
-> **Status: early alpha.** The three priority architectures (Wan2.1/2.2,
-> FLUX.2, Z-Image) are wired up; others are placeholders returning "not yet
-> implemented" until their flags are audited.
+> **Status: alpha.** All core tools shipped. Three priority architectures
+> (Wan2.1/2.2, FLUX.2, Z-Image) are live; others are placeholders that
+> return "not yet implemented" until their flags are audited.
 
 MCP server for [Musubi Tuner](https://github.com/kohya-ss/musubi-tuner) by
 kohya-ss — train LoRA / LoHa / LoKr models for Wan2.1/2.2, FLUX.2, Z-Image,
@@ -71,19 +71,50 @@ been run, and any missing deps.
 
 ## Available tools
 
-> *This section is filled in as tools land.* Currently:
+**Pipeline** — the three-step LoRA flow, in order:
 
-| Tool | Purpose |
-|------|---------|
-| `musubi_check_installation` | Report Musubi Tuner availability and config state. |
-| `musubi_list_architectures` | List all registered architectures with capabilities. |
-| `musubi_cache_latents` | Pre-cache VAE latents for a chosen architecture + dataset. |
+| Tool | Mode | Purpose |
+|---|---|---|
+| `musubi_cache_latents` | python | Step 1: pre-cache VAE latents. |
+| `musubi_cache_text_encoder` | python | Step 2: pre-cache text encoder outputs. |
+| `musubi_train` | accelerate | Step 3: LoRA / LoHa / LoKr training. |
+| `musubi_finetune` | accelerate | Full fine-tuning (Z-Image today; HunyuanVideo + Qwen-Image when placeholders go live). |
+| `musubi_generate` | python | Sample image / video from a trained checkpoint (+optional LoRA). |
 
-Planned (not yet shipped):
-`musubi_cache_text_encoder`, `musubi_train`, `musubi_finetune`,
-`musubi_generate`, `musubi_convert_lora`, `musubi_merge_lora`,
-`musubi_ema_merge`, `musubi_create_dataset_config`,
-`musubi_validate_dataset`, `musubi_caption_images`.
+**Dataset** — build and audit dataset configs:
+
+| Tool | Mode | Purpose |
+|---|---|---|
+| `musubi_create_dataset_config` | pure | Generate a valid dataset TOML. |
+| `musubi_validate_dataset_config` | pure | Structural + 4n+1 frame validation. |
+| `musubi_validate_dataset` | pure | Filesystem walk: images/videos + caption coverage. |
+| `musubi_caption_images` | python | Auto-caption with Qwen2.5-VL. |
+
+**LoRA utilities:**
+
+| Tool | Mode | Purpose |
+|---|---|---|
+| `musubi_convert_lora` | python | Convert LoRA between default ↔ other (ComfyUI) formats. |
+| `musubi_merge_lora` | python | Merge LoRAs into a base DiT. |
+| `musubi_ema_merge` | python | Post-Hoc EMA merge of multiple LoRA checkpoints. |
+
+**System:**
+
+| Tool | Mode | Purpose |
+|---|---|---|
+| `musubi_check_installation` | — | Report Python / torch / CUDA / accelerate status. |
+| `musubi_list_architectures` | — | Capability report for every registered architecture. |
+
+**Prompts:**
+
+| Prompt | Purpose |
+|---|---|
+| `plan_training_run` | Produce a concrete training plan from (architecture, training_type, source_data, hardware, goal). |
+| `diagnose_training_issue` | Root-cause a failed / stuck training run from its log tail. |
+
+**Resources:** `musubi://docs/{name}` serves Musubi Tuner's architecture
+docs verbatim (`wan`, `flux_2`, `zimage`, `dataset_config`,
+`advanced_config`, `loha_lokr`, `torch_compile`, ...).
 
 ---
 
