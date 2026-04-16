@@ -175,6 +175,8 @@ _WAN = ArchitectureConfig(
     tasks=(
         # Wan2.1 official
         "t2v-1.3B", "t2v-14B", "i2v-14B", "t2i-14B",
+        # Wan2.1 first-last-frame-to-video
+        "flf2v-14B",
         # Wan2.1 Fun Control
         "t2v-1.3B-FC", "t2v-14B-FC", "i2v-14B-FC",
         # Wan2.2
