@@ -222,6 +222,24 @@ npx @modelcontextprotocol/inspector uv run --directory . musubi-mcp
 
 ---
 
+## Roadmap
+
+Planned expansions — architecture activations, runner streaming,
+additional prompts, and developer ergonomics — are tracked in
+[ROADMAP.md](ROADMAP.md). The highest-priority items are:
+
+- Activate the six placeholder architectures (HunyuanVideo first, then
+  Qwen-Image, FramePack, FLUX.1 Kontext, HunyuanVideo 1.5, Kandinsky 5).
+- Streaming training progress back to the MCP client via `ctx.info()` /
+  `ctx.report_progress()` so long runs aren't silent.
+- A `scripts/regen_cli_help.sh` helper that re-dumps `docs/cli_help.txt`
+  with `PYTHONUTF8=1` whenever Musubi Tuner upstream updates.
+
+Contributions should follow the ground rules at the top of
+[ROADMAP.md](ROADMAP.md): audit `docs/cli_help.txt` before writing new
+tool code, cover every argv-building tool with a monkey-patched test,
+and include one live smoke test against a real Musubi venv.
+
 ## License
 
 Apache-2.0. Same license as Musubi Tuner upstream.

@@ -42,6 +42,9 @@ through typed tools.
 Before modifying code:
 
 - `README.md` — user-facing install, tool surface, client configs.
+- `ROADMAP.md` — planned expansions (placeholder architecture activations,
+  streaming logs, new prompts, CI). Read the ground-rules section at the
+  top before adding a new tool or arch.
 - `docs/cli_help.txt` — authoritative Musubi CLI flag dump, regenerated
   via the Musubi Tuner venv. Every tool's parameter schema must match this
   file verbatim.
