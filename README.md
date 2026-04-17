@@ -112,9 +112,26 @@ been run, and any missing deps.
 | `plan_training_run` | Produce a concrete training plan from (architecture, training_type, source_data, hardware, goal). |
 | `diagnose_training_issue` | Root-cause a failed / stuck training run from its log tail. |
 
-**Resources:** `musubi://docs/{name}` serves Musubi Tuner's architecture
-docs verbatim (`wan`, `flux_2`, `zimage`, `dataset_config`,
-`advanced_config`, `loha_lokr`, `torch_compile`, ...).
+**Resources:**
+
+- `musubi://docs/{name}` — Musubi Tuner's architecture docs verbatim
+  (`wan`, `flux_2`, `zimage`, `dataset_config`, `advanced_config`,
+  `loha_lokr`, `torch_compile`, ...). Served from the upstream repo
+  under `MUSUBI_TUNER_DIR`.
+- `knowledge://{name}` — **community LoRA training knowledge base**:
+  per-architecture training settings, dataset quality, hardware
+  profiles, common failure modes. Start with `knowledge://index` for
+  the table of contents. Mirrored across `klippbok-mcp`, this server,
+  and `ltx-trainer-mcp` so agents get the same reference material
+  regardless of which server they call.
+
+  Files may be flagged `INSUFFICIENT DATA`. When that happens, the
+  agent should **ask the user** rather than guess — the flag exists
+  because community consensus didn't.
+
+  Loading priority (first wins): `$KNOWLEDGE_BASE_DIR` env var
+  (live-sync with your central knowledge base), then the bundled copy
+  that ships with the package.
 
 ---
 
@@ -127,6 +144,7 @@ code.
 |----------|----------|---------|
 | `MUSUBI_TUNER_DIR` | **yes** | Absolute path to your Musubi Tuner checkout. All scripts run with this as cwd. |
 | `MUSUBI_PYTHON` | recommended | Python interpreter inside Musubi's venv. Falls back to `sys.executable`. |
+| `KNOWLEDGE_BASE_DIR` | optional | Folder of curated `.md` files exposed as `knowledge://{name}` resources. Overrides the bundled copy so you can live-sync a central knowledge base across klippbok-mcp / musubi-mcp / ltx-trainer-mcp. Unset = bundled. |
 | `MUSUBI_ACCELERATE` | optional | `accelerate` binary path. Defaults to the one on `MUSUBI_PYTHON`'s PATH. |
 | `GEMINI_API_KEY` | optional | Forwarded to captioning tools. |
 | `REPLICATE_API_TOKEN` | optional | Forwarded to captioning tools. |
