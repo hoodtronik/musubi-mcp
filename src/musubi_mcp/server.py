@@ -50,6 +50,12 @@ from .dataset_config import (
     write_dataset_toml,
 )
 from .resources import DOC_FILES, doc_uri, read_doc
+from .knowledge import (
+    all_knowledge_names,
+    knowledge_index,
+    knowledge_uri,
+    read_knowledge,
+)
 from .runner import (
     accelerate_executable,
     musubi_tuner_dir,
@@ -1863,6 +1869,40 @@ def _register_doc_resource(doc_name: str) -> None:
 
 for _name in DOC_FILES:
     _register_doc_resource(_name)
+
+
+# ---------------------------------------------------------------------------
+# Resources — community LoRA training knowledge base
+# ---------------------------------------------------------------------------
+
+# CLAUDE-NOTE: knowledge:// is the shared URI scheme across musubi-mcp,
+# ltx-trainer-mcp, and the klippbok workspace scaffolder. Files flagged
+# ``INSUFFICIENT DATA`` are exposed verbatim — the flag is load-bearing
+# and must reach the orchestration agent so it asks the user instead of
+# guessing hyperparameters. Do not filter.
+@mcp.resource(
+    "knowledge://index",
+    mime_type="text/markdown",
+    description="Index of the LoRA training knowledge base (per-arch training settings, "
+                "failure modes, dataset quality, hardware profiles). Read this first "
+                "to see what's available.",
+)
+def _knowledge_index_handler() -> str:  # noqa: ANN202
+    return knowledge_index()
+
+
+def _register_knowledge_resource(name: str) -> None:
+    uri = knowledge_uri(name)
+
+    @mcp.resource(uri, mime_type="text/markdown")
+    def _handler() -> str:  # noqa: ANN202
+        return read_knowledge(name)
+
+    _handler.__name__ = f"knowledge_{name}"
+
+
+for _name in all_knowledge_names():
+    _register_knowledge_resource(_name)
 
 
 # ---------------------------------------------------------------------------
